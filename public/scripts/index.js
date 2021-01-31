@@ -7,6 +7,7 @@ let filterByLevel = null;
 const start = async () => {
     const socket = new WebSocket(`ws://${location.host}/api/ws`);
     socket.addEventListener("message", onMessage);
+    socket.addEventListener("open", onOpen);
 
     for (const level of [null, 60, 50, 40, 30, 20, 10]) {
         createBtnFilterByLevel(level);
@@ -88,6 +89,10 @@ const onMessage = (message) => {
             mainContainer.parentElement.scrollTo(0, mainContainer.scrollHeight);
         }
     }
+};
+
+const onOpen = () => {
+    mainContainer.innerHTML = "";
 };
 
 const getPackageBtnLabel = (package) => {
