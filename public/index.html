@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link href="./styles/tailwind.css" rel="stylesheet" />
+    </head>
+    <body>
+        <div class="h-screen flex flex items-stretch">
+            <nav class="w-3/12 p-6 border-r border-gray-200">
+                <h1 class="text-2xl text-gray-800 font-bold mb-12">
+                    JSON Log Preview
+                </h1>
+                <h2 class="font-bold mb-6">Filter by level:</h2>
+                <div
+                    id="filterByLevelContainer"
+                    class="mb-6 pl-6 flex flex-col"
+                ></div>
+                <h2 class="font-bold mb-6">Filter by package:</h2>
+                <div
+                    id="filterByPackageContainer"
+                    class="pl-6 flex flex-col"
+                ></div>
+            </nav>
+            <main class="w-9/12 flex-grow bg-gray-100 p-6 overflow-y-auto">
+                <pre
+                    id="mainContainer"
+                    class="leading-relaxed rounded bg-gray-800 text-white p-6 overflow-x-auto"
+                >
+Loading...</pre
+                >
+            </main>
+        </div>
+        <script src="./scripts/index.js"></script>
+    </body>
+</html>
