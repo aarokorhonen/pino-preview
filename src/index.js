@@ -40,7 +40,7 @@ const app = express();
 const server = http.createServer(app);
 const wss = new WebSocket.Server({ server, path: "/api/ws" });
 
-app.get("*", express.static(path.join(__dirname, "public")));
+app.get("*", express.static(path.join(__dirname, "..", "public")));
 
 wss.on("connection", (ws) => {
     ws.send(JSON.stringify(values));
