@@ -27,6 +27,20 @@ rl.on("line", (line) => {
     }
 });
 
+rl.on("close", () => {
+    process.exit(0);
+});
+
+let exitOnSigInt = false;
+process.on("SIGINT", () => {
+    if (exitOnSigInt) {
+        process.exit(0);
+    } else {
+        exitOnSigInt = true;
+        console.log("Press Ctrl-C again to exit");
+    }
+});
+
 const pushNewValue = (newValue) => {
     values.push(newValue);
     wss.clients.forEach((client) => {
