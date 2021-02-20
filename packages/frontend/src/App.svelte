@@ -1,8 +1,6 @@
 <script>
 	import VirtualList from '@sveltejs/svelte-virtual-list';
 
-	export let name;
-
 	const logs = [];
 	const logsByPackage = new Map();
 
@@ -29,7 +27,7 @@
 			renderLogs(logs);
 		});
 		btn.innerHTML =
-			level !== null ? formatLogLevelLabel(level) : "(Disable filter)";
+			level !== null ? `<span class="${formatLogLevelLabel(level).class}">${formatLogLevelLabel(level).label}</span>` : "(Disable filter)";
 		btn.className =
 			"bg-gray-200 hover:bg-blue-700 font-bold py-2 px-4 rounded mb-1";
 		filterByLevelContainer.appendChild(btn);
@@ -136,23 +134,32 @@
 	const formatLogLevelLabel = (level) => {
 		switch (level) {
 			case 60:
-				return '<span class="text-red-400">FATAL</span>';
+				return { class:"text-red-400", label: "FATAL" }
 			case 50:
-				return '<span class="text-red-400">ERROR</span>';
+				return { class:"text-red-400", label: "ERROR" }
 			case 40:
-				return '<span class="text-yellow-500">WARN</span>';
+				return { class:"text-yellow-500", label: "WARN " }
 			case 30:
-				return '<span class="text-green-400">INFO</span>';
+				return { class:"text-green-400", label: "INFO " }
 			case 20:
-				return '<span class="text-blue-400">DEBUG</span>';
+				return { class:"text-blue-400", label: "DEBUG" }
 			case 10:
-				return '<span class="text-gray-500">TRACE</span>';
+				return { class:"text-gray-500", label: "TRACE" }
 			default:
 				return `${level}`;
 		}
 	};
 
 	const formatMessageField = (msg) => `<span class="text-blue-400">${msg}</span>`;
+
+	const formatTimeField = (time) => {
+		try {
+			const ts = new Date(time).toISOString();
+			return ts;
+		} catch (err) {
+			return "(Invalid timestamp)"
+		}
+	};
 
 	let filterByPackageContainer;
 	let filterByLevelContainer;
@@ -167,11 +174,6 @@
 		start();
 	};
 </script>
-
-<main>
-	<h1>Hello {name}!</h1>
-	<p>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p>
-</main>
 
 <main>
 	<div class="h-screen flex flex items-stretch">
@@ -190,39 +192,29 @@
 				class="pl-6 flex flex-col"
 			></div>
 		</nav>
-		<div class="w-9/12 flex-grow bg-gray-100 p-6 overflow-y-auto">
+		<div class="w-9/12 flex-grow bg-gray-900 text-gray-100 p-6 font-mono">
 			<VirtualList
 				items={things}
 				let:item
-				class="leading-relaxed rounded bg-gray-800 text-white p-6 overflow-x-auto">
-				<!-- this will be rendered for each currently visible item -->
-				<p>{JSON.stringify(item)}</p>
+				itemHeight={24}
+				>
+				<div class="cursor-pointer hover:bg-gray-700 rounded-sm px-4 whitespace-nowrap" style="height: 24px;"
+				on:click={() => {alert(JSON.stringify(item, null, 2))}}>
+					{#if item.package === "not-json"}
+						<span class="bg-gray-700">{item.message}</span>
+					{:else}
+						{formatTimeField(item.time)}
+						<span
+							class={formatLogLevelLabel(item.level).class}>
+							{formatLogLevelLabel(item.level).label}</span>&nbsp;:
+						<span class="text-blue-400">{item.msg}</span>
+					{/if}
+				</div>
 			  </VirtualList>
-
 		</div >
 	</div>
-	<script src="./scripts/index.js"></script>
 </main>
 
 
 <style>
-	main {
-		text-align: center;
-		padding: 1em;
-		max-width: 240px;
-		margin: 0 auto;
-	}
-
-	h1 {
-		color: #ff3e00;
-		text-transform: uppercase;
-		font-size: 4em;
-		font-weight: 100;
-	}
-
-	@media (min-width: 640px) {
-		main {
-			max-width: none;
-		}
-	}
 </style>

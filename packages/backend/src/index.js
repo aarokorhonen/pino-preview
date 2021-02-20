@@ -16,7 +16,7 @@ const values = [];
 rl.on("line", (line) => {
     try {
         const value = JSON.parse(line);
-        if (typeof value !== "object") {
+        if (typeof value !== "object" || value === null) {
             throw new Error("Not object");
         } else {
             pushNewValue(value);
