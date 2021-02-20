@@ -23,5 +23,5 @@ logger.warn("Proceed with caution");
 logger.error("Undefined is not a function");
 logger.fatal("Catastrophic failure");
 
-setInterval(() => produceLogs(), 2000);
-setInterval(() => produceLogs({ package: "guinea-pig-app-package-1" }), 3000);
+setInterval(() => produceLogs(), 200);
+setInterval(() => produceLogs({ package: "guinea-pig-app-package-1" }), 300);

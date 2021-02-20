@@ -1,4 +1,6 @@
 <script>
+	import VirtualList from '@sveltejs/svelte-virtual-list';
+
 	export let name;
 
 	const logs = [];
@@ -7,10 +9,11 @@
 	let filterByPackage = null;
 	let filterByLevel = null;
 
+	let things = [];
+
 	const start = async () => {
 		const socket = new WebSocket(`ws://${location.host}/api/ws`);
 		socket.addEventListener("message", onMessage);
-		socket.addEventListener("open", onOpen);
 
 		for (const level of [null, 60, 50, 40, 30, 20, 10]) {
 			createBtnFilterByLevel(level);
@@ -87,15 +90,11 @@
 			}
 
 			if (matchesFilter(entry)) {
-				const str = formatLogEntry(entry);
-				mainContainer.innerHTML += `${str}\n`;
-				mainContainer.parentElement.scrollTo(0, mainContainer.scrollHeight);
+				things.push(entry);
+				things = things;
+				// mainContainer.parentElement.scrollTo(0, mainContainer.scrollHeight);
 			}
 		}
-	};
-
-	const onOpen = () => {
-		mainContainer.innerHTML = "";
 	};
 
 	const getPackageBtnLabel = (pkg) => {
@@ -110,15 +109,7 @@
 
 
 	const renderLogs = (logs) => {
-		mainContainer.innerHTML = "";
-
-		for (const entry of logs) {
-			if (!matchesFilterByLevel(entry)) continue;
-			const str = formatLogEntry(entry);
-			mainContainer.innerHTML += `${str}\n`;
-		}
-
-		mainContainer.parentElement.scrollTo(0, mainContainer.scrollHeight);
+		things = logs.filter(matchesFilterByLevel);
 	};
 
 	const formatLogEntry = (log) => {
@@ -163,12 +154,10 @@
 
 	const formatMessageField = (msg) => `<span class="text-blue-400">${msg}</span>`;
 
-	let mainContainer;
 	let filterByPackageContainer;
 	let filterByLevelContainer;
 
 	window.onload = () => {
-		mainContainer = document.getElementById("mainContainer");
 		filterByPackageContainer = document.getElementById(
 			"filterByPackageContainer",
 		);
@@ -202,12 +191,14 @@
 			></div>
 		</nav>
 		<div class="w-9/12 flex-grow bg-gray-100 p-6 overflow-y-auto">
-			<pre
-				id="mainContainer"
-				class="leading-relaxed rounded bg-gray-800 text-white p-6 overflow-x-auto"
-			>
-Loading...</pre
-			>
+			<VirtualList
+				items={things}
+				let:item
+				class="leading-relaxed rounded bg-gray-800 text-white p-6 overflow-x-auto">
+				<!-- this will be rendered for each currently visible item -->
+				<p>{JSON.stringify(item)}</p>
+			  </VirtualList>
+
 		</div >
 	</div>
 	<script src="./scripts/index.js"></script>
