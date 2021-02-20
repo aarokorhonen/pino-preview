@@ -1,5 +1,6 @@
 <script>
     import VirtualList from "@sveltejs/svelte-virtual-list";
+    import Modal from "./Modal.svelte";
 
     const logs = [];
     const logsByPackage = new Map();
@@ -8,6 +9,8 @@
     let filterByLevel = null;
 
     let things = [];
+
+    let openLog = null;
 
     const start = async () => {
         const socket = new WebSocket(`ws://${location.host}/api/ws`);
@@ -181,6 +184,10 @@
     };
 </script>
 
+{#if openLog !== null}
+    <Modal bind:openLog />
+{/if}
+
 <main>
     <div class="h-screen flex flex items-stretch">
         <nav class="w-3/12 p-6 border-r border-gray-200">
@@ -198,7 +205,7 @@
                     class="cursor-pointer hover:bg-gray-700 rounded-sm px-4 whitespace-nowrap"
                     style="height: 24px;"
                     on:click={() => {
-                        alert(JSON.stringify(item, null, 2));
+                        openLog = item;
                     }}
                 >
                     {#if item.package === "not-json"}
