@@ -100,7 +100,11 @@
         if (filterByFreetextSearch === "") {
             return true;
         } else {
-            return JSON.stringify(log).indexOf(filterByFreetextSearch) !== -1;
+            return (
+                JSON.stringify(log)
+                    .toLowerCase()
+                    .indexOf(filterByFreetextSearch.toLowerCase()) !== -1
+            );
         }
     };
 
