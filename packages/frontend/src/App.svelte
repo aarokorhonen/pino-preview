@@ -21,11 +21,17 @@
 
     let openLog = null;
 
+    let viewport = null;
+
     onMount(async () => {
-        for (const el of document.getElementsByTagName(
+        const viewports = document.getElementsByTagName(
             "svelte-virtual-list-viewport",
-        )) {
-            el.classList.add("bg-gray-900");
+        );
+        if (viewports.length !== 1) {
+            throw viewports;
+        } else {
+            viewport = viewports[0];
+            viewport.classList.add("bg-gray-900");
         }
     });
 
@@ -113,6 +119,15 @@
             }
 
             logsByPackage = logsByPackage;
+        }
+
+        const shouldScroll =
+            viewport.scrollHeight -
+                (viewport.scrollTop + viewport.offsetHeight) <
+            100;
+        console.log(shouldScroll);
+        if (shouldScroll) {
+            viewport.scroll(0, viewport.scrollHeight);
         }
     };
 
