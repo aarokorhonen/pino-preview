@@ -2,14 +2,21 @@
     import VirtualList from "@sveltejs/svelte-virtual-list";
     import Modal from "./Modal.svelte";
 
-    const logs = [];
-    const logsByPackage = new Map();
+    let logsAll = [];
+    let logsByPackage = new Map();
 
     let filterByPackage = null;
     let filterByLevel = null;
     let filterByFreetextSearch = "";
 
-    let things = [];
+    $: logsVisible = (filterByPackage
+        ? logsByPackage[filterByPackage]
+        : logsAll
+    )
+        .filter((l) => matchesFilterByLevel(filterByLevel, l))
+        .filter((l) =>
+            matchesFilterByFreetextSearch(filterByFreetextSearch, l),
+        );
 
     let openLog = null;
 
@@ -28,7 +35,6 @@
         const btn = document.createElement("button");
         btn.addEventListener("click", () => {
             filterByLevel = level;
-            renderLogs(logs);
         });
         btn.innerHTML =
             level !== null
@@ -45,11 +51,6 @@
         const btn = document.createElement("button");
         btn.addEventListener("click", () => {
             filterByPackage = packageName;
-            renderLogs(
-                filterByPackage !== null
-                    ? logsByPackage.get(packageName)
-                    : logs,
-            );
         });
         btn.innerText =
             packageName !== null
@@ -60,15 +61,7 @@
         filterByPackageContainer.appendChild(btn);
     };
 
-    const matchesFilter = (log) => {
-        return (
-            matchesFilterByPackage(log) &&
-            matchesFilterByLevel(log) &&
-            matchesFilterByFreetextSearch(log)
-        );
-    };
-
-    const matchesFilterByPackage = (log) => {
+    const matchesFilterByPackage = (filterByPackage, log) => {
         if (filterByPackage === null) {
             return true;
         } else {
@@ -76,7 +69,7 @@
         }
     };
 
-    const matchesFilterByLevel = (log) => {
+    const matchesFilterByLevel = (filterByLevel, log) => {
         if (filterByLevel === null) {
             return true;
         } else if (log.level === undefined) {
@@ -86,7 +79,7 @@
         }
     };
 
-    const matchesFilterByFreetextSearch = (log) => {
+    const matchesFilterByFreetextSearch = (filterByFreetextSearch, log) => {
         if (filterByFreetextSearch === "") {
             return true;
         } else {
@@ -98,7 +91,8 @@
         const data = JSON.parse(message.data);
         const newLogs = Array.isArray(data) ? data : [data];
 
-        logs.push(...newLogs);
+        logsAll.push(...newLogs);
+        logsAll = logsAll;
 
         for (const entry of newLogs) {
             const { package: packageName } = entry;
@@ -109,11 +103,7 @@
                 logsByPackage.get(packageName).push(entry);
             }
 
-            if (matchesFilter(entry)) {
-                things.push(entry);
-                things = things;
-                // mainContainer.parentElement.scrollTo(0, mainContainer.scrollHeight);
-            }
+            logsByPackage = logsByPackage;
         }
     };
 
@@ -125,10 +115,6 @@
         } else {
             return `Only show entries with "package" field value: "${pkg}"`;
         }
-    };
-
-    const renderLogs = (logs) => {
-        things = logs.filter((log) => matchesFilter(log));
     };
 
     const formatLogEntry = (log) => {
@@ -220,7 +206,7 @@
             <div id="filterByPackageContainer" class="pl-6 flex flex-col" />
         </nav>
         <div class="w-9/12 flex-grow bg-gray-900 text-gray-100 p-6 font-mono">
-            <VirtualList items={things} let:item itemHeight={24}>
+            <VirtualList items={logsVisible} let:item itemHeight={24}>
                 <div
                     class="cursor-pointer hover:bg-gray-700 rounded-sm px-4 whitespace-nowrap"
                     style="height: 24px;"
