@@ -1,7 +1,7 @@
 <script>
     import VirtualList from "@sveltejs/svelte-virtual-list";
     import Modal from "./Modal.svelte";
-    import { onMount } from "svelte";
+    import { onMount, tick } from "svelte";
 
     let logsAll = [];
     let logsByPackage = new Map();
@@ -18,6 +18,8 @@
         .filter((l) =>
             matchesFilterByFreetextSearch(filterByFreetextSearch, l),
         );
+
+    $: filterByPackage, filterByLevel, filterByFreetextSearch, resetScroll();
 
     let openLog = null;
 
@@ -121,14 +123,28 @@
             logsByPackage = logsByPackage;
         }
 
+        scrollIfFollowing();
+    };
+
+    const resetScroll = async () => {
+        if (!viewport) return;
+        viewport.scroll(0, 0);
+    };
+
+    const scrollIfFollowing = () => {
+        if (!viewport) return;
         const shouldScroll =
             viewport.scrollHeight -
                 (viewport.scrollTop + viewport.offsetHeight) <
             100;
-        console.log(shouldScroll);
         if (shouldScroll) {
-            viewport.scroll(0, viewport.scrollHeight);
+            scroll();
         }
+    };
+
+    const scroll = () => {
+        if (!viewport) return;
+        viewport.scroll(0, viewport.scrollHeight);
     };
 
     const getPackageBtnLabel = (pkg) => {
