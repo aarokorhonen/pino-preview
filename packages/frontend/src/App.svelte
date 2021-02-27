@@ -1,6 +1,7 @@
 <script>
     import VirtualList from "@sveltejs/svelte-virtual-list";
     import Modal from "./Modal.svelte";
+    import { onMount } from "svelte";
 
     let logsAll = [];
     let logsByPackage = new Map();
@@ -19,6 +20,14 @@
         );
 
     let openLog = null;
+
+    onMount(async () => {
+        for (const el of document.getElementsByTagName(
+            "svelte-virtual-list-viewport",
+        )) {
+            el.classList.add("bg-gray-900");
+        }
+    });
 
     const start = async () => {
         const socket = new WebSocket(`ws://${location.host}/api/ws`);
