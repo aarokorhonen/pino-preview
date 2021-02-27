@@ -1,7 +1,7 @@
 <script>
     import VirtualList from "@sveltejs/svelte-virtual-list";
     import Modal from "./Modal.svelte";
-    import { onMount, tick } from "svelte";
+    import { onMount } from "svelte";
 
     let logsAll = [];
     let logsByPackage = new Map();
@@ -10,8 +10,8 @@
     let filterByLevel = null;
     let filterByFreetextSearch = "";
 
-    $: logsVisible = (filterByPackage
-        ? logsByPackage[filterByPackage]
+    $: logsVisible = (filterByPackage !== null
+        ? logsByPackage.get(filterByPackage)
         : logsAll
     )
         .filter((l) => matchesFilterByLevel(filterByLevel, l))
