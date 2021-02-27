@@ -7,6 +7,7 @@
 
     let filterByPackage = null;
     let filterByLevel = null;
+    let filterByFreetextSearch = "";
 
     let things = [];
 
@@ -60,7 +61,11 @@
     };
 
     const matchesFilter = (log) => {
-        return matchesFilterByPackage(log) && matchesFilterByLevel(log);
+        return (
+            matchesFilterByPackage(log) &&
+            matchesFilterByLevel(log) &&
+            matchesFilterByFreetextSearch(log)
+        );
     };
 
     const matchesFilterByPackage = (log) => {
@@ -78,6 +83,14 @@
             return false;
         } else {
             return log.level >= filterByLevel;
+        }
+    };
+
+    const matchesFilterByFreetextSearch = (log) => {
+        if (filterByFreetextSearch === "") {
+            return true;
+        } else {
+            return JSON.stringify(log).indexOf(filterByFreetextSearch) !== -1;
         }
     };
 
@@ -115,7 +128,7 @@
     };
 
     const renderLogs = (logs) => {
-        things = logs.filter(matchesFilterByLevel);
+        things = logs.filter((log) => matchesFilter(log));
     };
 
     const formatLogEntry = (log) => {
@@ -194,6 +207,13 @@
             <h1 class="text-2xl text-gray-800 font-bold mb-12">
                 JSON Log Preview
             </h1>
+            <h2 class="font-bold mb-6">Filter by freetext search:</h2>
+            <input
+                bind:value={filterByFreetextSearch}
+                placeholder="Search"
+                class="mb-6 flex flex-col bg-gray-100 w-full border-gray-200
+            border rounded-sm"
+            />
             <h2 class="font-bold mb-6">Filter by level:</h2>
             <div id="filterByLevelContainer" class="mb-6 pl-6 flex flex-col" />
             <h2 class="font-bold mb-6">Filter by package:</h2>
