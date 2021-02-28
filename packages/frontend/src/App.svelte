@@ -232,16 +232,18 @@
                 </div>
             {/if}
             <h2 class="font-bold mb-6">Filter by freetext search:</h2>
-            <input
-                bind:value={filterByFreetextSearch}
-                placeholder="Search"
-                class="mb-6 flex flex-col bg-gray-100 w-full border-gray-200
-            border rounded-sm"
-            />
+            <div class="mb-6 pl-6">
+                <input
+                    bind:value={filterByFreetextSearch}
+                    placeholder="&#x1F50D; – Search"
+                    class="p-2 flex flex-col bg-gray-100 w-full border-gray-200
+            border rounded"
+                />
+            </div>
             <h2 class="font-bold mb-6">Filter by level:</h2>
             <div id="filterByLevelContainer" class="mb-6 pl-6 flex flex-col" />
             <h2 class="font-bold mb-6">Filter by component:</h2>
-            <div id="filterByPackageContainer" class="mb-6 pl-6 flex flex-col">
+            <div class="mb-6 pl-6 flex flex-col">
                 {#each [null, ...components] as comp}
                     <button
                         class="bg-gray-200 hover:bg-blue-700 font-bold py-2 px-4 rounded mb-1 border-r-8"
