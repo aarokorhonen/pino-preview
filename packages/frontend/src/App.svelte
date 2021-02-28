@@ -235,8 +235,7 @@
         start();
     };
 
-    const prefixUnstructured =
-        "-" + "".padStart(20, "\u00a0") + "-" + "".padStart(7, "\u00a0");
+    const prefixUnstructured = "-" + "".padStart(4, "\u00a0") + " :";
 </script>
 
 {#if openLog !== null}
@@ -286,8 +285,10 @@
                 >
                     {#if item.package === "not-json"}
                         <span class="text-gray-500">
-                            {prefixUnstructured}{item.message}</span
-                        >
+                            {formatTimeField(item.time)}
+                            {prefixUnstructured}
+                            {item.message}
+                        </span>
                     {:else}
                         {formatTimeField(item.time)}
                         <span class={formatLogLevelLabel(item.level).class}>

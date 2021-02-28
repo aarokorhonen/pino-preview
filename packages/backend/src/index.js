@@ -22,7 +22,11 @@ rl.on("line", (line) => {
             pushNewValue(value);
         }
     } catch (err) {
-        const newValue = { package: "not-json", message: line };
+        const newValue = {
+            time: Date.now(),
+            package: "not-json",
+            message: line,
+        };
         pushNewValue(newValue);
     }
 });
