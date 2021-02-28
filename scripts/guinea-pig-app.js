@@ -8,20 +8,48 @@ const logger = pino({ base: null }).child({
 });
 logger.level = "trace";
 
-let i = 0;
+const logMessages = [
+    "[Object object]",
+    "A helpful diagnostics message",
+    "Hello world",
+    "Proceed with caution",
+    "'undefined' is not a function",
+    "Catastrophic failure",
+    "Pressure increasing rapidly",
+];
+
+const logLevels = ["trace", "debug", "info", "warn", "error", "fatal"];
+
+const packages = [
+    "cabin-pressure-regulator",
+    "uranium-reactor-cooling-facility",
+    "rocket-laser-targeting-subsystem",
+    "hyper-combobulator",
+];
+
+const getRandom = (arr) => {
+    return arr[Math.floor(Math.random() * arr.length)];
+};
+
 const produceLogs = (obj = {}) => {
-    if (i++ === 10) console.log("This is the 10th log entry.");
-    logger.info({ ...obj, function: "produceLogs" }, "Hello world!");
+    const message = getRandom(logMessages);
+    const isStructured = getRandom([true, true, true, false]);
+    if (isStructured) {
+        const level = getRandom(logLevels);
+        const package = getRandom(packages);
+        logger[level]({ ...obj, package }, message);
+    } else {
+        console.log(message);
+    }
 };
 
 console.log("Starting 'guinea-pig-app'...");
 
-logger.trace("[Object object]");
-logger.debug("A helpful diagnostics message");
-logger.info("Hello world");
-logger.warn("Proceed with caution");
-logger.error("Undefined is not a function");
-logger.fatal("Catastrophic failure");
+logger.trace(logMessages[0]);
+logger.debug(logMessages[1]);
+logger.info(logMessages[2]);
+logger.warn(logMessages[3]);
+logger.error(logMessages[4]);
+logger.fatal(logMessages[5]);
 
-setInterval(() => produceLogs(), 2000);
-setInterval(() => produceLogs({ package: "guinea-pig-app-package-1" }), 3000);
+setInterval(() => produceLogs(), 1000);
