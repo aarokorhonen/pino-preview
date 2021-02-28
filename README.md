@@ -7,7 +7,13 @@ It is currently designed to consume output from applications which use the
 [pino](https://github.com/pinojs/pino) library, but support for arbitrary structured
 JSON log formats is planned.
 
-![Screenshot of json-log-preview](./doc/screenshot.png "Screenshot of json-log-preview")
+_Screenshot – Log overview panel:_
+
+![Screenshot of json-log-preview](./doc/screenshot-1.png "Screenshot of json-log-preview")
+
+_Screenshot – Log entry details view:_
+
+![Screenshot of json-log-preview](./doc/screenshot-2.png "Screenshot of json-log-preview")
 
 The utility runs on Node.js, and uses websockets to stream log information to a locally running web interface.
 
@@ -40,12 +46,15 @@ For convenience, this app also forwards stdin to stdout, you can also see all lo
 
 ## Some planned features
 
-[ ] Support for arbitrary JSON log formats (field names, loglevels etc.)
-[ ] Binary usage support with `npm`
-[x] Performance improvements (heavy logging will eventually result in huge DOM and slow down this experimental version of the app, so don't forget to shut it down after use!)
-[ ] Graceful handling of app shutdown
-[ ] Improved JSON field discovery for setting filters
-[ ] Support for `jq`-style syntax for filter expressions
-[ ] Hide log entry details behind modal view by default
-[ ] Automatic test suite
-[x] Optional page auto-scroll
+-   [ ] Full documentation with usage
+-   [ ] Support for arbitrary JSON log formats (field names, loglevels etc.)
+-   [ ] Binary usage support with `npm`
+-   [ ] Improved JSON field discovery for setting filters
+-   [ ] Support for `jq`-style syntax for filter expressions
+-   [ ] Automatic test suite
+-   [x] Full-text search as a filter
+-   [x] Graceful handling of app shutdown
+-   [x] Hide log entry details behind modal view by default
+-   [x] Performance improvements (heavy logging will eventually result in huge DOM and slow down this experimental version of the app, so don't forget to shut it down after use!)
+-   [x] Optional page auto-scroll
+-   [x] Per-component health checks
