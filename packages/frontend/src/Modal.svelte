@@ -28,7 +28,7 @@
             aria-hidden="true">&#8203;</span
         >
         <div
-            class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-3xl sm:w-full"
+            class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg lg:max-w-5xl sm:w-full overflow-x-auto"
             role="dialog"
             aria-modal="true"
             aria-labelledby="modal-headline"
