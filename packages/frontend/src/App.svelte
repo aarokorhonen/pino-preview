@@ -2,6 +2,7 @@
     import VirtualList from "@sveltejs/svelte-virtual-list";
     import Modal from "./Modal.svelte";
     import { onMount } from "svelte";
+    import LogEntry, { formatLogLevelLabel } from "./LogEntry.svelte";
 
     let wsState = "uninitialized";
 
@@ -23,7 +24,7 @@
 
     $: filterByPackage, filterByLevel, filterByFreetextSearch, resetScroll();
 
-    let openLog = null;
+    export let openLog = null;
 
     let viewport = null;
 
@@ -191,36 +192,8 @@
         return str.replace(/\n$/, "");
     };
 
-    const formatLogLevelLabel = (level) => {
-        switch (level) {
-            case 60:
-                return { class: "text-red-400", label: "FATAL" };
-            case 50:
-                return { class: "text-red-400", label: "ERROR" };
-            case 40:
-                return { class: "text-yellow-500", label: "WARN " };
-            case 30:
-                return { class: "text-green-400", label: "INFO " };
-            case 20:
-                return { class: "text-blue-400", label: "DEBUG" };
-            case 10:
-                return { class: "text-gray-500", label: "TRACE" };
-            default:
-                return `${level}`;
-        }
-    };
-
     const formatMessageField = (msg) =>
         `<span class="text-blue-400">${msg}</span>`;
-
-    const formatTimeField = (time) => {
-        try {
-            const ts = new Date(time).toISOString();
-            return ts.replace(/\.\d\d\d/, "").replace("T", " ");
-        } catch (err) {
-            return "(Invalid timestamp)";
-        }
-    };
 
     let filterByPackageContainer;
     let filterByLevelContainer;
@@ -234,8 +207,6 @@
         );
         start();
     };
-
-    const prefixUnstructured = "-" + "".padStart(4, "\u00a0") + " :";
 </script>
 
 {#if openLog !== null}
@@ -276,27 +247,13 @@
         </nav>
         <div class="w-9/12 flex-grow bg-gray-900 text-gray-100 p-6 font-mono">
             <VirtualList items={logsVisible} let:item itemHeight={24}>
-                <div
-                    class="cursor-pointer hover:bg-gray-700 rounded-sm px-4 whitespace-nowrap"
-                    style="height: 24px;"
+                <LogEntry
+                    logEntry={item}
+                    isVerbose={false}
                     on:click={() => {
                         openLog = item;
                     }}
-                >
-                    {#if item.package === "not-json"}
-                        <span class="text-gray-500">
-                            {formatTimeField(item.time)}
-                            {prefixUnstructured}
-                            {item.message}
-                        </span>
-                    {:else}
-                        {formatTimeField(item.time)}
-                        <span class={formatLogLevelLabel(item.level).class}>
-                            {formatLogLevelLabel(item.level).label}</span
-                        >&nbsp;:
-                        <span class="text-blue-400">{item.msg}</span>
-                    {/if}
-                </div>
+                />
             </VirtualList>
         </div>
     </div>
