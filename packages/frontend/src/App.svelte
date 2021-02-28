@@ -3,6 +3,8 @@
     import Modal from "./Modal.svelte";
     import { onMount } from "svelte";
 
+    let wsState = "uninitialized";
+
     let logsAll = [];
     let logsByPackage = new Map();
 
@@ -40,6 +42,7 @@
     const start = async () => {
         const socket = new WebSocket(`ws://${location.host}/api/ws`);
         socket.addEventListener("message", onMessage);
+        socket.addEventListener("close", onClose);
 
         for (const level of [null, 60, 50, 40, 30, 20, 10]) {
             createBtnFilterByLevel(level);
@@ -112,6 +115,8 @@
         const data = JSON.parse(message.data);
         const newLogs = Array.isArray(data) ? data : [data];
 
+        if (wsState === "uninitialized") wsState = "open";
+
         logsAll.push(...newLogs);
         logsAll = logsAll;
 
@@ -128,6 +133,10 @@
         }
 
         scrollIfFollowing();
+    };
+
+    const onClose = () => {
+        wsState = "closed";
     };
 
     const resetScroll = async () => {
@@ -237,6 +246,20 @@
             <h1 class="text-2xl text-gray-800 font-bold mb-12">
                 JSON Log Preview
             </h1>
+            {#if wsState === "closed"}
+                <div
+                    class="p-2 bg-red-800 items-center text-red-100 leading-none lg:rounded-full flex mb-6"
+                    role="alert"
+                >
+                    <span
+                        class="flex rounded-full bg-red-500 uppercase px-2 py-1 text-xs font-bold mr-3"
+                        >Note</span
+                    >
+                    <span class="font-semibold mr-2 text-left flex-auto"
+                        >Log stream terminated</span
+                    >
+                </div>
+            {/if}
             <h2 class="font-bold mb-6">Filter by freetext search:</h2>
             <input
                 bind:value={filterByFreetextSearch}
