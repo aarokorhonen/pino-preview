@@ -216,7 +216,7 @@
     const formatTimeField = (time) => {
         try {
             const ts = new Date(time).toISOString();
-            return ts;
+            return ts.replace(/\.\d\d\d/, "").replace("T", " ");
         } catch (err) {
             return "(Invalid timestamp)";
         }
@@ -236,7 +236,7 @@
     };
 
     const prefixUnstructured =
-        "-" + "".padStart(24, "\u00a0") + "-" + "".padStart(7, "\u00a0");
+        "-" + "".padStart(20, "\u00a0") + "-" + "".padStart(7, "\u00a0");
 </script>
 
 {#if openLog !== null}
