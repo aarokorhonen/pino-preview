@@ -198,6 +198,19 @@
     let filterByPackageContainer;
     let filterByLevelContainer;
 
+    const updateHeapDiagnostics = () => {
+        if (!window.performance.memory) return;
+        const { usedJSHeapSize, totalJSHeapSize } = window.performance.memory;
+        heapDiagnostics = `
+            Used: ${(usedJSHeapSize / 1024 / 1024).toFixed(1)} MiB
+            Total: ${(totalJSHeapSize / 1024 / 1024).toFixed(1)} MiB
+        `;
+    };
+
+    let heapDiagnostics = "";
+    updateHeapDiagnostics();
+    setInterval(updateHeapDiagnostics, 5000);
+
     window.onload = () => {
         filterByPackageContainer = document.getElementById(
             "filterByPackageContainer",
@@ -243,7 +256,18 @@
             <h2 class="font-bold mb-6">Filter by level:</h2>
             <div id="filterByLevelContainer" class="mb-6 pl-6 flex flex-col" />
             <h2 class="font-bold mb-6">Filter by package:</h2>
-            <div id="filterByPackageContainer" class="pl-6 flex flex-col" />
+            <div
+                id="filterByPackageContainer"
+                class="mb-6 pl-6 flex flex-col"
+            />
+            {#if heapDiagnostics}
+                <div class="mb-6 text-gray-300">
+                    <p>Heap:</p>
+                    <p class="ml-3">
+                        {heapDiagnostics}
+                    </p>
+                </div>
+            {/if}
         </nav>
         <div class="w-9/12 flex-grow bg-gray-900 text-gray-100 p-6 font-mono">
             <VirtualList items={logsVisible} let:item itemHeight={24}>
