@@ -37,7 +37,8 @@ const produceLogs = (obj = {}) => {
     if (isStructured) {
         const level = getRandom(logLevels);
         const package = getRandom(packages);
-        logger[level]({ ...obj, package }, message);
+        const healthy = getRandom([{ healthy: true }, { healthy: false }, {}]);
+        logger[level]({ ...obj, package, ...healthy }, message);
     } else {
         console.log(message);
     }

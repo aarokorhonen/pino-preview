@@ -13,6 +13,8 @@
     let filterByLevel = null;
     let filterByFreetextSearch = "";
 
+    let healths = new Map();
+
     $: logsVisible = (filterByPackage !== null
         ? logsByPackage.get(filterByPackage)
         : logsAll
@@ -130,6 +132,8 @@
                 logsByPackage.get(packageName).push(entry);
             }
 
+            updatePackageHealth(packageName, entry.healthy);
+
             logsByPackage = logsByPackage;
         }
 
@@ -138,6 +142,12 @@
 
     const onClose = () => {
         wsState = "closed";
+    };
+
+    const updatePackageHealth = (packageName, healthy) => {
+        if (!packageName || typeof healthy === "undefined") return;
+        healths.set(packageName, Boolean(healthy));
+        healths = healths;
     };
 
     const resetScroll = async () => {
