@@ -13,6 +13,7 @@
     let filterByLevel = null;
     let filterByFreetextSearch = "";
 
+    let components = [];
     let healths = new Map();
 
     $: logsVisible = (filterByPackage !== null
@@ -50,8 +51,6 @@
         for (const level of [null, 60, 50, 40, 30, 20, 10]) {
             createBtnFilterByLevel(level);
         }
-
-        createBtnFilterByPackage(null);
     };
 
     const createBtnFilterByLevel = (level) => {
@@ -68,28 +67,6 @@
         btn.className =
             "bg-gray-200 hover:bg-blue-700 font-bold py-2 px-4 rounded mb-1";
         filterByLevelContainer.appendChild(btn);
-    };
-
-    const createBtnFilterByPackage = (packageName) => {
-        const btn = document.createElement("button");
-        btn.addEventListener("click", () => {
-            filterByPackage = packageName;
-        });
-        btn.innerText =
-            packageName !== null
-                ? getPackageBtnLabel(packageName)
-                : "(Disable filter)";
-        btn.className =
-            "bg-gray-200 hover:bg-blue-700 font-bold py-2 px-4 rounded mb-1";
-        filterByPackageContainer.appendChild(btn);
-    };
-
-    const matchesFilterByPackage = (filterByPackage, log) => {
-        if (filterByPackage === null) {
-            return true;
-        } else {
-            return log.package === filterByPackage;
-        }
     };
 
     const matchesFilterByLevel = (filterByLevel, log) => {
@@ -125,16 +102,16 @@
 
         for (const entry of newLogs) {
             const { package: packageName } = entry;
-            if (!logsByPackage.has(packageName)) {
+            if (!components.includes(packageName)) {
+                components = [...components, packageName];
                 logsByPackage.set(packageName, [entry]);
-                createBtnFilterByPackage(packageName);
+                logsByPackage = logsByPackage;
             } else {
                 logsByPackage.get(packageName).push(entry);
+                logsByPackage = logsByPackage;
             }
 
             updatePackageHealth(packageName, entry.healthy);
-
-            logsByPackage = logsByPackage;
         }
 
         scrollIfFollowing();
@@ -171,13 +148,15 @@
         viewport.scroll(0, viewport.scrollHeight);
     };
 
-    const getPackageBtnLabel = (pkg) => {
-        if (pkg === undefined) {
-            return 'Only show entries with no "package" field';
+    const getComponentFiltetrBtnLabel = (pkg) => {
+        if (pkg === null) {
+            return "(Disable filter)";
+        } else if (pkg === undefined) {
+            return "Only show entries with no component field";
         } else if (pkg === "not-json") {
-            return "Only show non-JSON entries";
+            return "Only show unstructured entries";
         } else {
-            return `Only show entries with "package" field value: "${pkg}"`;
+            return `Only show component: "${pkg}"`;
         }
     };
 
@@ -205,7 +184,6 @@
     const formatMessageField = (msg) =>
         `<span class="text-blue-400">${msg}</span>`;
 
-    let filterByPackageContainer;
     let filterByLevelContainer;
 
     const updateHeapDiagnostics = () => {
@@ -222,9 +200,6 @@
     setInterval(updateHeapDiagnostics, 5000);
 
     window.onload = () => {
-        filterByPackageContainer = document.getElementById(
-            "filterByPackageContainer",
-        );
         filterByLevelContainer = document.getElementById(
             "filterByLevelContainer",
         );
@@ -265,11 +240,19 @@
             />
             <h2 class="font-bold mb-6">Filter by level:</h2>
             <div id="filterByLevelContainer" class="mb-6 pl-6 flex flex-col" />
-            <h2 class="font-bold mb-6">Filter by package:</h2>
-            <div
-                id="filterByPackageContainer"
-                class="mb-6 pl-6 flex flex-col"
-            />
+            <h2 class="font-bold mb-6">Filter by component:</h2>
+            <div id="filterByPackageContainer" class="mb-6 pl-6 flex flex-col">
+                {#each [null, ...components] as comp}
+                    <button
+                        class="bg-gray-200 hover:bg-blue-700 font-bold py-2 px-4 rounded mb-1"
+                        on:click={() => {
+                            filterByPackage = comp;
+                        }}
+                    >
+                        {getComponentFiltetrBtnLabel(comp)}
+                    </button>
+                {/each}
+            </div>
             {#if heapDiagnostics}
                 <div class="mb-6 text-gray-300">
                     <p>Heap:</p>
