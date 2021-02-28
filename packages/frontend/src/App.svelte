@@ -53,22 +53,6 @@
         }
     };
 
-    const createBtnFilterByLevel = (level) => {
-        const btn = document.createElement("button");
-        btn.addEventListener("click", () => {
-            filterByLevel = level;
-        });
-        btn.innerHTML =
-            level !== null
-                ? `<span class="${formatLogLevelLabel(level).class}">${
-                      formatLogLevelLabel(level).label
-                  }</span>`
-                : "(Disable filter)";
-        btn.className =
-            "bg-gray-200 hover:bg-blue-700 font-bold py-2 px-4 rounded mb-1";
-        filterByLevelContainer.appendChild(btn);
-    };
-
     const matchesFilterByLevel = (filterByLevel, log) => {
         if (filterByLevel === null) {
             return true;
@@ -160,32 +144,6 @@
         }
     };
 
-    const formatLogEntry = (log) => {
-        if (log.package === "not-json") {
-            return `<span class="bg-gray-700">${log.message}</span>`;
-        } else {
-            const ts = new Date(log.time).toISOString();
-            const level = formatLogLevelLabel(log.level);
-            const message = formatMessageField(log.msg);
-            const pretty = `[${ts}] ${level}: ${message}`;
-            return pretty + "\n" + formatLogEntryObject(log);
-        }
-    };
-
-    const formatLogEntryObject = (log) => {
-        let str = "";
-        for (const [key, val] of Object.entries(log)) {
-            if (["level", "time", "msg"].includes(key)) continue;
-            str += `    ${key}: ${JSON.stringify(val, null, 8)}\n`;
-        }
-        return str.replace(/\n$/, "");
-    };
-
-    const formatMessageField = (msg) =>
-        `<span class="text-blue-400">${msg}</span>`;
-
-    let filterByLevelContainer;
-
     const updateHeapDiagnostics = () => {
         if (!window.performance.memory) return;
         const { usedJSHeapSize, totalJSHeapSize } = window.performance.memory;
@@ -200,9 +158,6 @@
     setInterval(updateHeapDiagnostics, 5000);
 
     window.onload = () => {
-        filterByLevelContainer = document.getElementById(
-            "filterByLevelContainer",
-        );
         start();
     };
 </script>
@@ -241,7 +196,25 @@
                 />
             </div>
             <h2 class="font-bold mb-6">Filter by level:</h2>
-            <div id="filterByLevelContainer" class="mb-6 pl-6 flex flex-col" />
+            <div class="mb-6 pl-6 flex flex-col">
+                {#each [null, 60, 50, 40, 30, 20, 10] as level}
+                    <button
+                        class="bg-gray-200 hover:bg-blue-700 font-bold py-2 px-4 rounded mb-1"
+                        class:bg-blue-200={filterByLevel === level}
+                        on:click={() => {
+                            filterByLevel = level;
+                        }}
+                    >
+                        {#if level !== null}
+                            <span class={formatLogLevelLabel(level).class}>
+                                {formatLogLevelLabel(level).label}
+                            </span>
+                        {:else}
+                            (Disable filter)
+                        {/if}
+                    </button>
+                {/each}
+            </div>
             <h2 class="font-bold mb-6">Filter by component:</h2>
             <div class="mb-6 pl-6 flex flex-col">
                 {#each [null, ...components] as comp}
