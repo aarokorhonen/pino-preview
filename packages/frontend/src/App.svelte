@@ -253,7 +253,14 @@
                             filterByPackage = comp;
                         }}
                     >
-                        {getComponentFiltetrBtnLabel(comp)}
+                        <span
+                            class="float-right inline-flex items-center justify-center w-8 ml-4 px-2 py-1 text-xs font-bold leading-none text-gray-500 bg-gray-300 rounded-full"
+                        >
+                            {(logsByPackage.get(comp) || logsAll).length}
+                        </span>
+                        <div class="text-left">
+                            {getComponentFiltetrBtnLabel(comp)}
+                        </div>
                     </button>
                 {/each}
             </div>
