@@ -21,7 +21,7 @@
 
 <script>
     export let logEntry;
-    // export let isVerbose = false;
+    export let isVerbose = false;
 
     const prefixUnstructured = "-" + "".padStart(4, "\u00a0") + " :";
 
@@ -36,7 +36,9 @@
 </script>
 
 <div
-    class="cursor-pointer hover:bg-gray-700 rounded-sm px-4 whitespace-nowrap"
+    class="rounded-sm px-4 whitespace-nowrap font-mono"
+    class:cursor-pointer={!isVerbose}
+    class:hover:bg-gray-700={!isVerbose}
     style="height: 24px;"
     on:click
 >
@@ -54,3 +56,9 @@
         <span class="text-blue-400">{logEntry.msg}</span>
     {/if}
 </div>
+
+{#if isVerbose}
+    <div class="whitespace-pre px-4 text-yellow-200">
+        {JSON.stringify(logEntry, null, 4)}
+    </div>
+{/if}

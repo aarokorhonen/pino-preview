@@ -1,4 +1,6 @@
 <script>
+    import LogEntry from "./LogEntry.svelte";
+
     export let openLog;
 
     const close = () => {
@@ -26,7 +28,7 @@
             aria-hidden="true">&#8203;</span
         >
         <div
-            class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full"
+            class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-3xl sm:w-full"
             role="dialog"
             aria-modal="true"
             aria-labelledby="modal-headline"
@@ -53,17 +55,19 @@
                             />
                         </svg>
                     </div>
-                    <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                    <div
+                        class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left flex-grow"
+                    >
                         <h3
-                            class="text-lg leading-6 font-medium text-gray-900"
+                            class="text-lg leading-6 font-medium text-gray-900 mb-6"
                             id="modal-headline"
                         >
-                            {openLog.msg}
+                            Message details: "{openLog.msg}"
                         </h3>
-                        <div class="mt-2">
-                            <p class="text-sm text-gray-500 whitespace-pre">
-                                {JSON.stringify(openLog, null, 2)}
-                            </p>
+                        <div
+                            class="mt-2 bg-gray-900 text-white rounded p-6 font-mono"
+                        >
+                            <LogEntry logEntry={openLog} isVerbose={true} />
                         </div>
                     </div>
                 </div>
