@@ -3,6 +3,10 @@
     "version": "0.0.1",
     "description": "",
     "private": true,
+    "main": "./packages/backend/src/index.js",
+    "bin": {
+        "json-log-preview": "./packages/backend/src/index.js"
+    },
     "workspaces": {
         "packages": [
             "./packages/backend",
