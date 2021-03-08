@@ -17,23 +17,23 @@ _Screenshot – Log entry details view:_
 
 The utility runs on Node.js, and uses websockets to stream log information to a locally running web interface.
 
+## Installation (WIP)
+
+Publishing this package is currently work-in-progress. In the meanwhile, you can run the following commands to install it locally:
+
+```shell
+$ git checkout https://github.com/aarokorhonen/json-log-preview
+$ cd json-log-preview
+$ yarn install
+$ yarn workspace frontend run build
+$ yarn global add file:$PWD
+```
+
+The last command adds it to your yarn global workspace, and then it should be available by just running `json-log-preview`. Alternatively if you dont want it in global PATH, you can skip the last command and run it directly with node (`node ~/path-to/json-log-preview`).
+
 ## Usage
 
-Install dependencies with yarn:
-
-```console
-$ yarn install
-```
-
-Run this app with Node.js using the `start` package script (installing as a
-package / bin is not yet supported). This app consumes input from the stdin
-stream, so setup a pipe for the log-producing app (or `cat` if your logs are in
-a file). This codebase includes a simple logger app for demonstration purposes,
-and both can be launched with the following example command:
-
-```console
-yarn run start:dev:guinea-pig-app | yarn run start
-```
+This app consumes input from the stdin stream, so setup a pipe for the log-producing app (use `cat` or `tail -f` if your logs are in a file).
 
 By default, the app will be served at [http://localhost:3001](http://localhost:3001). This can be modified by specifying the `PORT` environment variable.
 
@@ -48,13 +48,18 @@ For convenience, this app also forwards stdin to stdout, you can also see all lo
 
 -   [ ] Full documentation with usage
 -   [ ] Support for arbitrary JSON log formats (field names, loglevels etc.)
--   [ ] Binary usage support with `npm`
+-   [ ] Publish package
 -   [ ] Improved JSON field discovery for setting filters
 -   [ ] Support for `jq`-style syntax for filter expressions
 -   [ ] Automatic test suite
+-   [ ] Improved JSON viewing experience
+-   [ ] Responsive design
+-   [x] Binary usage support
 -   [x] Full-text search as a filter
 -   [x] Graceful handling of app shutdown
 -   [x] Hide log entry details behind modal view by default
 -   [x] Performance improvements (heavy logging will eventually result in huge DOM and slow down this experimental version of the app, so don't forget to shut it down after use!)
 -   [x] Optional page auto-scroll
 -   [x] Per-component health checks
+
+Etc.
