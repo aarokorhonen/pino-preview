@@ -180,7 +180,10 @@
 <main>
     <div class="h-screen flex flex items-stretch">
         <nav class="w-3/12 p-6 border-r border-gray-200 overflow-y-auto">
-            <h1 class="text-2xl text-gray-800 font-bold mb-12">
+            <h1
+                class="text-2xl text-gray-800 font-bold mb-12"
+                data-test-app-title
+            >
                 JSON Log Preview
             </h1>
             {#if wsState === "closed"}

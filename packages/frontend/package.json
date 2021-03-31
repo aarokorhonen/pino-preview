@@ -5,16 +5,21 @@
     "scripts": {
         "build": "rollup -c",
         "dev": "rollup -c -w",
-        "start": "sirv public"
+        "start": "sirv public",
+        "test": "start-server-and-test 'yarn test:start' http://localhost:5000 'yarn test:run'",
+        "test:run": "cypress run",
+        "test:start": "yarn build && yarn start"
     },
     "devDependencies": {
         "@rollup/plugin-commonjs": "^17.0.0",
         "@rollup/plugin-node-resolve": "^11.0.0",
+        "cypress": "^6.8.0",
         "rollup": "^2.3.4",
         "rollup-plugin-css-only": "^3.1.0",
         "rollup-plugin-livereload": "^2.0.0",
         "rollup-plugin-svelte": "^7.0.0",
         "rollup-plugin-terser": "^7.0.0",
+        "start-server-and-test": "^1.12.1",
         "svelte": "^3.0.0"
     },
     "dependencies": {
