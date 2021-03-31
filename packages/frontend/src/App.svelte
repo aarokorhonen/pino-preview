@@ -12,6 +12,7 @@
     let filterByPackage = null;
     let filterByLevel = null;
     let filterByFreetextSearch = "";
+    let filterByTimestamp = "";
 
     let components = [];
     let healths = new Map();
@@ -20,12 +21,17 @@
         ? logsByPackage.get(filterByPackage)
         : logsAll
     )
+        .filter((l) => matchesFilterByTimestamp(filterByTimestamp, l))
         .filter((l) => matchesFilterByLevel(filterByLevel, l))
         .filter((l) =>
             matchesFilterByFreetextSearch(filterByFreetextSearch, l),
         );
 
-    $: filterByPackage, filterByLevel, filterByFreetextSearch, resetScroll();
+    $: filterByPackage,
+        filterByLevel,
+        filterByFreetextSearch,
+        filterByTimestamp,
+        resetScroll();
 
     export let openLog = null;
 
@@ -56,6 +62,15 @@
             return false;
         } else {
             return log.level >= filterByLevel;
+        }
+    };
+
+    const matchesFilterByTimestamp = (filterByTimestamp, log) => {
+        const minimumTimestamp = new Date(filterByTimestamp).getTime();
+        if (filterByTimestamp === "") {
+            return true;
+        } else {
+            return log.time >= minimumTimestamp;
         }
     };
 
@@ -159,7 +174,7 @@
 </script>
 
 {#if openLog !== null}
-    <Modal bind:openLog />
+    <Modal bind:openLog bind:filterByTimestamp />
 {/if}
 
 <main>
@@ -187,6 +202,15 @@
                 <input
                     bind:value={filterByFreetextSearch}
                     placeholder="&#x1F50D; – Search"
+                    class="p-2 flex flex-col bg-gray-100 w-full border-gray-200
+            border rounded"
+                />
+            </div>
+            <h2 class="font-bold mb-6">Filter by timestamp (on or after):</h2>
+            <div class="mb-6 pl-6">
+                <input
+                    bind:value={filterByTimestamp}
+                    placeholder="e.g. 2021-03-23 15:10:15Z"
                     class="p-2 flex flex-col bg-gray-100 w-full border-gray-200
             border rounded"
                 />
