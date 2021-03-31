@@ -1,4 +1,6 @@
 <script>
+    import { onDestroy } from "svelte";
+
     import LogEntry from "./LogEntry.svelte";
 
     export let openLog;
@@ -8,6 +10,24 @@
     };
 
     let copied = false;
+
+    let now = new Date();
+
+    const interval = setInterval(() => {
+        now = new Date();
+    }, 1000);
+
+    onDestroy(() => {
+        clearInterval(interval);
+    });
+
+    const getRelativeTimestampLabel = (ms) => {
+        if (ms < 60_000) {
+            return `${(ms / 1_000).toFixed(0)} second(s) ago`;
+        } else {
+            return `${(ms / 60_000).toFixed(0)} minute(s) ago`;
+        }
+    };
 
     const copyJson = async () => {
         await navigator.clipboard.writeText(JSON.stringify(openLog, null, 4));
@@ -69,7 +89,10 @@
                             class="text-lg leading-6 font-medium text-gray-900 mb-6"
                             id="modal-headline"
                         >
-                            Message details: "{openLog.msg}"
+                            Message details: "{openLog.msg}" &mdash;
+                            {getRelativeTimestampLabel(
+                                now - new Date(openLog.time),
+                            )}
                         </h3>
                         <div
                             class="mt-2 bg-gray-900 text-white rounded p-6 font-mono"
