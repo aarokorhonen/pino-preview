@@ -6,7 +6,8 @@
     "author": "",
     "private": true,
     "scripts": {
-        "start": "node ."
+        "start": "node .",
+        "test": "jest"
     },
     "dependencies": {
         "express": "^4.17.1",
@@ -15,6 +16,8 @@
         "ws": "^7.4.2"
     },
     "devDependencies": {
+        "got": "^11.8.2",
+        "jest": "^26.6.3",
         "nodemon": "^2.0.7"
     },
     "prettier": {
