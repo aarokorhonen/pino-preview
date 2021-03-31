@@ -47,10 +47,6 @@
         const socket = new WebSocket(`ws://${location.host}/api/ws`);
         socket.addEventListener("message", onMessage);
         socket.addEventListener("close", onClose);
-
-        for (const level of [null, 60, 50, 40, 30, 20, 10]) {
-            createBtnFilterByLevel(level);
-        }
     };
 
     const matchesFilterByLevel = (filterByLevel, log) => {
