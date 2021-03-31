@@ -5,6 +5,7 @@ const http = require("http");
 const readline = require("readline");
 const express = require("express");
 const WebSocket = require("ws");
+const open = require("open");
 
 process.stdin.pipe(process.stdout);
 
@@ -71,7 +72,9 @@ wss.on("connection", (ws) => {
 
 const port = process.env.PORT || 3001;
 server.listen(port, () => {
-    console.log(
-        `[json-log-preview] Server listening at http://localhost:${port}`,
-    );
+    const url = `http://localhost:${port}`;
+    console.log(`[json-log-preview] Server listening at ${url}`);
+    if (process.argv.includes("--open")) {
+        void open(url);
+    }
 });
