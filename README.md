@@ -22,7 +22,7 @@ The utility runs on Node.js, and uses websockets to stream log information to a 
 Publishing this package is currently work-in-progress. In the meanwhile, you can run the following commands to install it locally:
 
 ```shell
-$ git checkout https://github.com/aarokorhonen/json-log-preview
+$ git clone https://github.com/aarokorhonen/json-log-preview
 $ cd json-log-preview
 $ yarn install
 $ yarn workspace frontend run build
