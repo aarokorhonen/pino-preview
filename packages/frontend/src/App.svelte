@@ -207,148 +207,150 @@
 <main>
     <div class="h-screen flex flex items-stretch">
         <nav
-            class="w-80 p-6 border-r border-gray-200 overflow-y-auto flex-shrink-0 bg-gray-50"
+            class="w-80 border-r border-gray-200 overflow-y-auto flex-shrink-0 bg-gray-50"
         >
             <h1
-                class="text-2xl text-gray-800 font-bold mb-12"
+                class="p-6 text-2xl text-gray-800 font-bold bg-gray-200 text-center"
                 data-test-app-title
             >
                 JSON Log Preview
             </h1>
-            {#if wsState === "closed"}
-                <div
-                    class="p-2 bg-red-800 items-center text-red-100 leading-none lg:rounded-full flex mb-6"
-                    role="alert"
-                >
-                    <span
-                        class="flex rounded-full bg-red-500 uppercase px-2 py-1 text-xs font-bold mr-3"
-                        >Note</span
-                    >
-                    <span class="font-semibold mr-2 text-left flex-auto"
-                        >Log stream terminated</span
-                    >
-                </div>
-            {/if}
-            <label
-                for="filterByFreetextSearch"
-                class="block text-sm font-medium text-gray-700"
-            >
-                Filter by freetext search
-            </label>
-            <div class="mt-1 mb-6">
-                <input
-                    bind:value={filterByFreetextSearch}
-                    id="filterByFreetextSearch"
-                    type="text"
-                    placeholder="Enter freetext search"
-                    class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                />
-            </div>
-            <label
-                for="filterByTimestamp"
-                class="block text-sm font-medium text-gray-700"
-            >
-                Filter by timestamp (on or after)
-            </label>
-            <div class="mb-4">
-                <input
-                    bind:value={filterByTimestamp}
-                    id="filterByTimestamp"
-                    type="text"
-                    placeholder="e.g. 2021-03-23 15:10:15Z"
-                    class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                />
-                <div>
-                    <button
-                        class="text-blue-500 background-transparent font-semibold uppercase px-2 py-2 text-xs outline-none focus:outline-none mr-1 mb-1"
-                        type="button"
-                        on:click={() => {
-                            filterByTimestamp = new Date(
-                                Date.now() - 0 * 60_000,
-                            ).toISOString();
-                        }}
-                    >
-                        Now
-                    </button>
-                    <button
-                        class="text-blue-500 background-transparent font-semibold uppercase px-2 py-2 text-xs outline-none focus:outline-none mr-1 mb-1"
-                        type="button"
-                        on:click={() => {
-                            filterByTimestamp = new Date(
-                                Date.now() - 1 * 60_000,
-                            ).toISOString();
-                        }}
-                    >
-                        1 min ago
-                    </button>
-                    <button
-                        class="text-blue-500 background-transparent font-semibold uppercase px-2 py-2 text-xs outline-none focus:outline-none mr-1 mb-1"
-                        type="button"
-                        on:click={() => {
-                            filterByTimestamp = new Date(
-                                Date.now() - 5 * 60_000,
-                            ).toISOString();
-                        }}
-                    >
-                        5 min ago
-                    </button>
-                </div>
-            </div>
-            <h2 class="block text-sm font-medium text-gray-700 mb-1">
-                Filter by level
-            </h2>
-            <div class="mb-6 pl-6 flex flex-col">
-                {#each [null, 60, 50, 40, 30, 20, 10] as level}
-                    <button
-                        class="bg-gray-200 hover:bg-blue-700 font-bold py-2 px-4 rounded mb-1"
-                        class:bg-blue-200={filterByLevel === level}
-                        on:click={() => {
-                            filterByLevel = level;
-                        }}
-                    >
-                        {#if level !== null}
-                            <span class={formatLogLevelLabel(level).class}>
-                                {formatLogLevelLabel(level).label}
-                            </span>
-                        {:else}
-                            (Disable filter)
-                        {/if}
-                    </button>
-                {/each}
-            </div>
-            <h2 class="block text-sm font-medium text-gray-700 mb-1">
-                Filter by component
-            </h2>
-            <div class="mb-6 pl-6 flex flex-col">
-                {#each [null, ...components] as comp}
-                    <button
-                        class="bg-gray-200 hover:bg-blue-700 font-bold py-2 px-4 rounded mb-1 border-r-8"
-                        class:bg-blue-200={filterByPackage === comp}
-                        class:border-red-400={healths.get(comp) === false}
-                        class:border-green-400={healths.get(comp) === true}
-                        on:click={() => {
-                            filterByPackage = comp;
-                        }}
+            <div class="p-6 ">
+                {#if wsState === "closed"}
+                    <div
+                        class="p-2 bg-red-800 items-center text-red-100 leading-none lg:rounded-full flex mb-6"
+                        role="alert"
                     >
                         <span
-                            class="float-right inline-flex items-center justify-center w-8 ml-4 px-2 py-1 text-xs font-bold leading-none text-gray-500 bg-gray-300 rounded-full"
+                            class="flex rounded-full bg-red-500 uppercase px-2 py-1 text-xs font-bold mr-3"
+                            >Note</span
                         >
-                            {(logsByPackage.get(comp) || logsAll).length}
-                        </span>
-                        <div class="text-left">
-                            {getComponentFiltetrBtnLabel(comp)}
-                        </div>
-                    </button>
-                {/each}
-            </div>
-            {#if heapDiagnostics}
-                <div class="mb-6 text-gray-300">
-                    <p>Heap:</p>
-                    <p class="ml-3">
-                        {heapDiagnostics}
-                    </p>
+                        <span class="font-semibold mr-2 text-left flex-auto"
+                            >Log stream terminated</span
+                        >
+                    </div>
+                {/if}
+                <label
+                    for="filterByFreetextSearch"
+                    class="block text-sm font-medium text-gray-700"
+                >
+                    Filter by freetext search
+                </label>
+                <div class="mt-1 mb-6">
+                    <input
+                        bind:value={filterByFreetextSearch}
+                        id="filterByFreetextSearch"
+                        type="text"
+                        placeholder="Enter freetext search"
+                        class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                    />
                 </div>
-            {/if}
+                <label
+                    for="filterByTimestamp"
+                    class="block text-sm font-medium text-gray-700"
+                >
+                    Filter by timestamp (on or after)
+                </label>
+                <div class="mb-4">
+                    <input
+                        bind:value={filterByTimestamp}
+                        id="filterByTimestamp"
+                        type="text"
+                        placeholder="e.g. 2021-03-23 15:10:15Z"
+                        class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                    />
+                    <div>
+                        <button
+                            class="text-blue-500 background-transparent font-semibold uppercase px-2 py-2 text-xs outline-none focus:outline-none mr-1 mb-1"
+                            type="button"
+                            on:click={() => {
+                                filterByTimestamp = new Date(
+                                    Date.now() - 0 * 60_000,
+                                ).toISOString();
+                            }}
+                        >
+                            Now
+                        </button>
+                        <button
+                            class="text-blue-500 background-transparent font-semibold uppercase px-2 py-2 text-xs outline-none focus:outline-none mr-1 mb-1"
+                            type="button"
+                            on:click={() => {
+                                filterByTimestamp = new Date(
+                                    Date.now() - 1 * 60_000,
+                                ).toISOString();
+                            }}
+                        >
+                            1 min ago
+                        </button>
+                        <button
+                            class="text-blue-500 background-transparent font-semibold uppercase px-2 py-2 text-xs outline-none focus:outline-none mr-1 mb-1"
+                            type="button"
+                            on:click={() => {
+                                filterByTimestamp = new Date(
+                                    Date.now() - 5 * 60_000,
+                                ).toISOString();
+                            }}
+                        >
+                            5 min ago
+                        </button>
+                    </div>
+                </div>
+                <h2 class="block text-sm font-medium text-gray-700 mb-1">
+                    Filter by level
+                </h2>
+                <div class="mb-6 pl-6 flex flex-col">
+                    {#each [null, 60, 50, 40, 30, 20, 10] as level}
+                        <button
+                            class="bg-gray-200 hover:bg-blue-700 font-bold py-2 px-4 rounded mb-1"
+                            class:bg-blue-200={filterByLevel === level}
+                            on:click={() => {
+                                filterByLevel = level;
+                            }}
+                        >
+                            {#if level !== null}
+                                <span class={formatLogLevelLabel(level).class}>
+                                    {formatLogLevelLabel(level).label}
+                                </span>
+                            {:else}
+                                (Disable filter)
+                            {/if}
+                        </button>
+                    {/each}
+                </div>
+                <h2 class="block text-sm font-medium text-gray-700 mb-1">
+                    Filter by component
+                </h2>
+                <div class="mb-6 pl-6 flex flex-col">
+                    {#each [null, ...components] as comp}
+                        <button
+                            class="bg-gray-200 hover:bg-blue-700 font-bold py-2 px-4 rounded mb-1 border-r-8"
+                            class:bg-blue-200={filterByPackage === comp}
+                            class:border-red-400={healths.get(comp) === false}
+                            class:border-green-400={healths.get(comp) === true}
+                            on:click={() => {
+                                filterByPackage = comp;
+                            }}
+                        >
+                            <span
+                                class="float-right inline-flex items-center justify-center w-8 ml-4 px-2 py-1 text-xs font-bold leading-none text-gray-500 bg-gray-300 rounded-full"
+                            >
+                                {(logsByPackage.get(comp) || logsAll).length}
+                            </span>
+                            <div class="text-left">
+                                {getComponentFiltetrBtnLabel(comp)}
+                            </div>
+                        </button>
+                    {/each}
+                </div>
+                {#if heapDiagnostics}
+                    <div class="mb-6 text-gray-300">
+                        <p>Heap:</p>
+                        <p class="ml-3">
+                            {heapDiagnostics}
+                        </p>
+                    </div>
+                {/if}
+            </div>
         </nav>
 
         <div class="flex-grow bg-gray-900 text-gray-100 p-6 font-mono">
