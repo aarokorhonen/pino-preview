@@ -171,7 +171,15 @@
     window.onload = () => {
         start();
     };
+
+    const handleKeydown = (event) => {
+        if (event.key === "Escape") {
+            openLog = null;
+        }
+    };
 </script>
+
+<svelte:window on:keydown={handleKeydown} />
 
 {#if openLog !== null}
     <Modal bind:openLog bind:filterByTimestamp />
