@@ -175,6 +175,14 @@
     const handleKeydown = (event) => {
         if (event.key === "Escape") {
             openLog = null;
+        } else if (event.key === "ArrowUp" || event.key === "k") {
+            if (openLog) {
+                handleNavigateByOffset({ detail: { offset: -1 } });
+            }
+        } else if (event.key === "ArrowDown" || event.key === "j") {
+            if (openLog) {
+                handleNavigateByOffset({ detail: { offset: +1 } });
+            }
         }
     };
 
