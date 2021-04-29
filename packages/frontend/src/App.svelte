@@ -206,7 +206,9 @@
 
 <main>
     <div class="h-screen flex flex items-stretch">
-        <nav class="w-3/12 p-6 border-r border-gray-200 overflow-y-auto">
+        <nav
+            class="w-80 p-6 border-r border-gray-200 overflow-y-auto flex-shrink-0 bg-gray-50"
+        >
             <h1
                 class="text-2xl text-gray-800 font-bold mb-12"
                 data-test-app-title
@@ -227,26 +229,38 @@
                     >
                 </div>
             {/if}
-            <h2 class="font-bold mb-6">Filter by freetext search:</h2>
-            <div class="mb-6 pl-6">
+            <label
+                for="filterByFreetextSearch"
+                class="block text-sm font-medium text-gray-700"
+            >
+                Filter by freetext search
+            </label>
+            <div class="mt-1 mb-6">
                 <input
                     bind:value={filterByFreetextSearch}
-                    placeholder="&#x1F50D; – Search"
-                    class="p-2 flex flex-col bg-gray-100 w-full border-gray-200
-            border rounded"
+                    id="filterByFreetextSearch"
+                    type="text"
+                    placeholder="Enter freetext search"
+                    class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                 />
             </div>
-            <h2 class="font-bold mb-6">Filter by timestamp (on or after):</h2>
-            <div class="mb-6 pl-6">
+            <label
+                for="filterByTimestamp"
+                class="block text-sm font-medium text-gray-700"
+            >
+                Filter by timestamp (on or after)
+            </label>
+            <div class="mb-4">
                 <input
                     bind:value={filterByTimestamp}
+                    id="filterByTimestamp"
+                    type="text"
                     placeholder="e.g. 2021-03-23 15:10:15Z"
-                    class="p-2 flex flex-col bg-gray-100 w-full border-gray-200
-            border rounded"
+                    class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                 />
                 <div>
                     <button
-                        class="text-blue-500 background-transparent font-bold uppercase px-3 py-3 text-xs outline-none focus:outline-none mr-1 mb-1"
+                        class="text-blue-500 background-transparent font-semibold uppercase px-2 py-2 text-xs outline-none focus:outline-none mr-1 mb-1"
                         type="button"
                         on:click={() => {
                             filterByTimestamp = new Date(
@@ -257,7 +271,7 @@
                         Now
                     </button>
                     <button
-                        class="text-blue-500 background-transparent font-bold uppercase px-3 py-3 text-xs outline-none focus:outline-none mr-1 mb-1"
+                        class="text-blue-500 background-transparent font-semibold uppercase px-2 py-2 text-xs outline-none focus:outline-none mr-1 mb-1"
                         type="button"
                         on:click={() => {
                             filterByTimestamp = new Date(
@@ -268,7 +282,7 @@
                         1 min ago
                     </button>
                     <button
-                        class="text-blue-500 background-transparent font-bold uppercase px-3 py-3 text-xs outline-none focus:outline-none mr-1 mb-1"
+                        class="text-blue-500 background-transparent font-semibold uppercase px-2 py-2 text-xs outline-none focus:outline-none mr-1 mb-1"
                         type="button"
                         on:click={() => {
                             filterByTimestamp = new Date(
@@ -280,7 +294,9 @@
                     </button>
                 </div>
             </div>
-            <h2 class="font-bold mb-6">Filter by level:</h2>
+            <h2 class="block text-sm font-medium text-gray-700 mb-1">
+                Filter by level
+            </h2>
             <div class="mb-6 pl-6 flex flex-col">
                 {#each [null, 60, 50, 40, 30, 20, 10] as level}
                     <button
@@ -300,7 +316,9 @@
                     </button>
                 {/each}
             </div>
-            <h2 class="font-bold mb-6">Filter by component:</h2>
+            <h2 class="block text-sm font-medium text-gray-700 mb-1">
+                Filter by component
+            </h2>
             <div class="mb-6 pl-6 flex flex-col">
                 {#each [null, ...components] as comp}
                     <button
@@ -332,7 +350,8 @@
                 </div>
             {/if}
         </nav>
-        <div class="w-9/12 flex-grow bg-gray-900 text-gray-100 p-6 font-mono">
+
+        <div class="flex-grow bg-gray-900 text-gray-100 p-6 font-mono">
             <VirtualList items={logsVisible} let:item itemHeight={24}>
                 <LogEntry
                     logEntry={item}
