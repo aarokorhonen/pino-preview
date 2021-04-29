@@ -232,7 +232,7 @@
                 {/if}
                 <label
                     for="filterByFreetextSearch"
-                    class="block text-sm font-medium text-gray-700"
+                    class="block text-sm font-bold text-gray-700"
                 >
                     Filter by freetext search
                 </label>
@@ -247,7 +247,7 @@
                 </div>
                 <label
                     for="filterByTimestamp"
-                    class="block text-sm font-medium text-gray-700"
+                    class="block text-sm font-bold text-gray-700"
                 >
                     Filter by timestamp (on or after)
                 </label>
@@ -295,29 +295,49 @@
                         </button>
                     </div>
                 </div>
-                <h2 class="block text-sm font-medium text-gray-700 mb-1">
-                    Filter by level
-                </h2>
-                <div class="mb-6 pl-6 flex flex-col">
-                    {#each [null, 60, 50, 40, 30, 20, 10] as level}
-                        <button
-                            class="bg-gray-200 hover:bg-blue-700 font-bold py-2 px-4 rounded mb-1"
-                            class:bg-blue-200={filterByLevel === level}
-                            on:click={() => {
-                                filterByLevel = level;
-                            }}
+
+                <fieldset class="mb-6">
+                    <div>
+                        <legend
+                            class="block text-sm font-bold text-gray-700 mb-1"
+                            >Filter by level</legend
                         >
-                            {#if level !== null}
-                                <span class={formatLogLevelLabel(level).class}>
-                                    {formatLogLevelLabel(level).label}
-                                </span>
-                            {:else}
-                                (Disable filter)
-                            {/if}
-                        </button>
-                    {/each}
-                </div>
-                <h2 class="block text-sm font-medium text-gray-700 mb-1">
+                        <p class="block text-sm font-light text-gray-400">
+                            Choose the minimum log level to display
+                        </p>
+                    </div>
+                    <div class="mt-4 space-y-2">
+                        {#each [null, 60, 50, 40, 30, 20, 10] as level}
+                            <div class="flex items-center">
+                                <input
+                                    bind:group={filterByLevel}
+                                    value={level}
+                                    id="filterByLevel_{level}"
+                                    name="push_notifications"
+                                    type="radio"
+                                    class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
+                                />
+                                <label
+                                    for="filterByLevel_{level}"
+                                    class="ml-3 block text-sm font-medium text-gray-700"
+                                >
+                                    {#if level !== null}
+                                        <span
+                                            class={formatLogLevelLabel(level)
+                                                .class}
+                                        >
+                                            {formatLogLevelLabel(level).label} ({level})
+                                        </span>
+                                    {:else}
+                                        Display all (Disable filter)
+                                    {/if}
+                                </label>
+                            </div>
+                        {/each}
+                    </div>
+                </fieldset>
+
+                <h2 class="block text-sm font-bold text-gray-700 mb-1">
                     Filter by component
                 </h2>
                 <div class="mb-6 pl-6 flex flex-col">
