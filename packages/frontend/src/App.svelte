@@ -151,7 +151,7 @@
         } else if (pkg === "not-json") {
             return "Only show unstructured entries";
         } else {
-            return `Only show component: "${pkg}"`;
+            return `Only show component: <span class="font-mono">"${pkg}"</span>`;
         }
     };
 
@@ -313,7 +313,6 @@
                                     bind:group={filterByLevel}
                                     value={level}
                                     id="filterByLevel_{level}"
-                                    name="push_notifications"
                                     type="radio"
                                     class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
                                 />
@@ -337,31 +336,58 @@
                     </div>
                 </fieldset>
 
-                <h2 class="block text-sm font-bold text-gray-700 mb-1">
-                    Filter by component
-                </h2>
-                <div class="mb-6 pl-6 flex flex-col">
-                    {#each [null, ...components] as comp}
-                        <button
-                            class="bg-gray-200 hover:bg-blue-700 font-bold py-2 px-4 rounded mb-1 border-r-8"
-                            class:bg-blue-200={filterByPackage === comp}
-                            class:border-red-400={healths.get(comp) === false}
-                            class:border-green-400={healths.get(comp) === true}
-                            on:click={() => {
-                                filterByPackage = comp;
-                            }}
+                <fieldset class="mb-6">
+                    <div>
+                        <legend
+                            class="block text-sm font-bold text-gray-700 mb-1"
+                            >Filter by component</legend
                         >
-                            <span
-                                class="float-right inline-flex items-center justify-center w-8 ml-4 px-2 py-1 text-xs font-bold leading-none text-gray-500 bg-gray-300 rounded-full"
-                            >
-                                {(logsByPackage.get(comp) || logsAll).length}
-                            </span>
-                            <div class="text-left">
-                                {getComponentFiltetrBtnLabel(comp)}
+                        <p class="block text-sm font-light text-gray-400">
+                            Focus on a particular component
+                        </p>
+                    </div>
+                    <div class="mt-4 space-y-2">
+                        {#each [null, ...components] as comp}
+                            <div class="flex items-center">
+                                <input
+                                    bind:group={filterByPackage}
+                                    value={comp}
+                                    id="filterByPackage_{comp}"
+                                    type="radio"
+                                    class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
+                                />
+                                <label
+                                    for="filterByPackage_{comp}"
+                                    class="ml-3 block text-sm font-medium text-gray-700 flex-grow flex items-center cursor-pointer"
+                                >
+                                    <div class="text-left flex-grow">
+                                        {@html getComponentFiltetrBtnLabel(
+                                            comp,
+                                        )}
+                                    </div>
+                                    <span
+                                        class="inline-flex items-center justify-center w-8 ml-4 px-2 py-1 text-xs font-bold leading-none text-gray-500 bg-gray-300 rounded-full"
+                                        class:bg-red-200={healths.get(comp) ===
+                                            false}
+                                        class:text-red-600={healths.get(
+                                            comp,
+                                        ) === false}
+                                        class:bg-green-200={healths.get(
+                                            comp,
+                                        ) === true}
+                                        class:text-green-600={healths.get(
+                                            comp,
+                                        ) === true}
+                                    >
+                                        {(logsByPackage.get(comp) || logsAll)
+                                            .length}
+                                    </span>
+                                </label>
                             </div>
-                        </button>
-                    {/each}
-                </div>
+                        {/each}
+                    </div>
+                </fieldset>
+
                 {#if heapDiagnostics}
                     <div class="mb-6 text-gray-300">
                         <p>Heap:</p>
