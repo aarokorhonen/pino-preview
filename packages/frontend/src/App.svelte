@@ -177,12 +177,31 @@
             openLog = null;
         }
     };
+
+    const handleNavigateByOffset = (event) => {
+        const {
+            detail: { offset },
+        } = event;
+        if (!openLog) return;
+        const currentIndex = logsVisible.indexOf(openLog);
+        const offsetIndex = currentIndex + offset;
+        const found = !(
+            currentIndex === -1 ||
+            offsetIndex < 0 ||
+            offsetIndex > logsVisible.length - 1
+        );
+        openLog = found ? logsVisible[offsetIndex] : null;
+    };
 </script>
 
 <svelte:window on:keydown={handleKeydown} />
 
 {#if openLog !== null}
-    <Modal bind:openLog bind:filterByTimestamp />
+    <Modal
+        bind:openLog
+        bind:filterByTimestamp
+        on:navigateByOffset={handleNavigateByOffset}
+    />
 {/if}
 
 <main>

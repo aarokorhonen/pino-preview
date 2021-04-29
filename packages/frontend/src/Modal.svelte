@@ -1,10 +1,12 @@
 <script>
-    import { onDestroy } from "svelte";
+    import { onDestroy, createEventDispatcher } from "svelte";
 
     import LogEntry from "./LogEntry.svelte";
 
     export let openLog;
     export let filterByTimestamp;
+
+    const dispatch = createEventDispatcher();
 
     const close = () => {
         openLog = null;
@@ -134,6 +136,22 @@
                     on:click={hideOlderLogs}
                 >
                     Hide older logs
+                </button>
+                <button
+                    type="button"
+                    class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm mr-auto"
+                    on:click={() =>
+                        dispatch("navigateByOffset", { offset: +1 })}
+                >
+                    &#129047; Next
+                </button>
+                <button
+                    type="button"
+                    class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                    on:click={() =>
+                        dispatch("navigateByOffset", { offset: -1 })}
+                >
+                    &#129045; Previous
                 </button>
             </div>
         </div>
