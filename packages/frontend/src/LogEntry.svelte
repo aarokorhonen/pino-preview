@@ -33,6 +33,41 @@
             return "(Invalid timestamp)";
         }
     };
+
+    function syntaxHighlightJson(json) {
+        const classes = {
+            number: "text-blue-400",
+            string: "text-green-400",
+            boolean: "text-red-400 font-bold",
+            null: "text-gray-400 font-bold",
+            key: undefined,
+        };
+        const getClass = (match) => {
+            if (/^"/.test(match)) {
+                if (/:$/.test(match)) {
+                    return classes.key;
+                } else {
+                    return classes.string;
+                }
+            } else if (/^\d+$/.test(match)) {
+                return classes.number;
+            } else if (/true|false/.test(match)) {
+                return classes.boolean;
+            } else if (/null/.test(match)) {
+                return classes.null;
+            } else {
+                return "";
+            }
+        };
+        const jsonEscaped = json
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;");
+        return jsonEscaped.replace(
+            /("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g,
+            (match) => `<span class="${getClass(match)}">${match}</span>`,
+        );
+    }
 </script>
 
 <div
@@ -59,6 +94,6 @@
 
 {#if isVerbose}
     <div class="whitespace-pre px-4 text-yellow-200 mt-4">
-        {JSON.stringify(logEntry, null, 4)}
+        {@html syntaxHighlightJson(JSON.stringify(logEntry, null, 4))}
     </div>
 {/if}
