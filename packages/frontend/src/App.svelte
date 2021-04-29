@@ -244,6 +244,41 @@
                     class="p-2 flex flex-col bg-gray-100 w-full border-gray-200
             border rounded"
                 />
+                <div>
+                    <button
+                        class="text-blue-500 background-transparent font-bold uppercase px-3 py-3 text-xs outline-none focus:outline-none mr-1 mb-1"
+                        type="button"
+                        on:click={() => {
+                            filterByTimestamp = new Date(
+                                Date.now() - 0 * 60_000,
+                            ).toISOString();
+                        }}
+                    >
+                        Now
+                    </button>
+                    <button
+                        class="text-blue-500 background-transparent font-bold uppercase px-3 py-3 text-xs outline-none focus:outline-none mr-1 mb-1"
+                        type="button"
+                        on:click={() => {
+                            filterByTimestamp = new Date(
+                                Date.now() - 1 * 60_000,
+                            ).toISOString();
+                        }}
+                    >
+                        1 min ago
+                    </button>
+                    <button
+                        class="text-blue-500 background-transparent font-bold uppercase px-3 py-3 text-xs outline-none focus:outline-none mr-1 mb-1"
+                        type="button"
+                        on:click={() => {
+                            filterByTimestamp = new Date(
+                                Date.now() - 5 * 60_000,
+                            ).toISOString();
+                        }}
+                    >
+                        5 min ago
+                    </button>
+                </div>
             </div>
             <h2 class="font-bold mb-6">Filter by level:</h2>
             <div class="mb-6 pl-6 flex flex-col">
