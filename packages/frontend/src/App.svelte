@@ -314,11 +314,11 @@
                                     value={level}
                                     id="filterByLevel_{level}"
                                     type="radio"
-                                    class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
+                                    class="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 cursor-pointer"
                                 />
                                 <label
                                     for="filterByLevel_{level}"
-                                    class="ml-3 block text-sm font-medium text-gray-700"
+                                    class="ml-3 block text-sm font-medium text-gray-700 cursor-pointer"
                                 >
                                     {#if level !== null}
                                         <span
@@ -354,7 +354,7 @@
                                     value={comp}
                                     id="filterByPackage_{comp}"
                                     type="radio"
-                                    class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
+                                    class="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 cursor-pointer"
                                 />
                                 <label
                                     for="filterByPackage_{comp}"
@@ -389,9 +389,9 @@
                 </fieldset>
 
                 {#if heapDiagnostics}
-                    <div class="mb-6 text-gray-300">
-                        <p>Heap:</p>
-                        <p class="ml-3">
+                    <div class="text-gray-300">
+                        <p class="block text-sm font-bold mb-1">Heap</p>
+                        <p class="block text-sm font-light">
                             {heapDiagnostics}
                         </p>
                     </div>
