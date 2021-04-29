@@ -114,6 +114,7 @@
 
     const onClose = () => {
         wsState = "closed";
+        document.title = "(Disconnected) – " + document.title;
     };
 
     const updatePackageHealth = (packageName, healthy) => {
