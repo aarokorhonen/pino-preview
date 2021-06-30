@@ -71,7 +71,9 @@
 </script>
 
 <div
-    class="rounded-sm px-4 whitespace-nowrap font-mono"
+    class="rounded-sm px-4 truncate font-mono text-blue-400"
+    class:text-blue-400={logEntry.package !== "not-json"}
+    class:text-gray-500={logEntry.package === "not-json"}
     class:cursor-pointer={!isVerbose}
     class:hover:bg-gray-700={!isVerbose}
     style="height: 24px;"

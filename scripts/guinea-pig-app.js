@@ -16,6 +16,7 @@ const logMessages = [
     "'undefined' is not a function",
     "Catastrophic failure",
     "Pressure increasing rapidly",
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi eget elit non tortor eleifend condimentum sit amet ac orci. Pellentesque porta pulvinar ipsum, eu varius ante fermentum eu. Proin eu malesuada magna.",
 ];
 
 const logLevels = ["trace", "debug", "info", "warn", "error", "fatal"];

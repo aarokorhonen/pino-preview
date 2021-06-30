@@ -406,7 +406,9 @@
             </div>
         </nav>
 
-        <div class="flex-grow bg-gray-900 text-gray-100 p-6 font-mono">
+        <div
+            class="flex-grow bg-gray-900 text-gray-100 p-6 font-mono overflow-x-hidden"
+        >
             <VirtualList items={logsVisible} let:item itemHeight={24}>
                 <LogEntry
                     logEntry={item}
