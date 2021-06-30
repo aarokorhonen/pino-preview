@@ -113,6 +113,12 @@
     const onClose = () => {
         wsState = "closed";
         document.title = "(Disconnected) – " + document.title;
+        const elFavicon = document.head.querySelector("link[rel=icon]");
+        if (elFavicon) {
+            // loaded from data URI since the app may be offline at this point
+            elFavicon.href =
+                "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAB1UlEQVRYR81XPSwDYRh+npMu0kRDLCZpw0LPT8ViaysRmw0jZguJzWCTsFj9jGKziUTZLKL+LbjGZPGTSqRLuVfu4pprFT09+dx67/u8z/f+v0SFnxFO1iFoDgoYp6CLYDOIkK0uyArkVohjQvbwom1FMqnnSqD5k5DRkWiFyRkSwwLU/iRv/SeQE8EGNJmPnO5efafzJYHDWKy2Ph+aE3ASQKASw2Vk8oQsPQWysz3pdK4cRlkCRmd/i5jmJsG2XxouUhPIJTVtKHKyc12K94nAtR7v1qBtA2j0w7gL496EOdBytnfkxi0iYL0cpuz/gXHH5j009rk9USBgxTyUDx345favvGeFIxvI9jo5USCQ0RMLAk757PaycIQshs92pz8qBrBLTXhRRbZ75Z0Hpd0qUdsDRjS5CmLMK0pV8oK1yHlqnFaHYxB3lTaZqoy6lO1m9YImGnp8BNDW/QL2hmOO8kZPLBOc8Kboj7RAVmhEE4cgY/5AekQRSTMTTT4I0eBR1RdxCh6Z0ZOvAtT4gugRhMDbPyCgOgTKk1B9GapuRMpbsfJhZBNQPY4tEkoXEouA8pXMDoXKpdRp40rXcoeE0sPEIaH0NHNPVWXHaelo/6vz/B2OtwUw7C6u7QAAAABJRU5ErkJggg==";
+        }
     };
 
     const updatePackageHealth = (packageName, healthy) => {
