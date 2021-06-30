@@ -31,6 +31,17 @@ const getRandom = (arr) => {
     return arr[Math.floor(Math.random() * arr.length)];
 };
 
+const useRandomizedTimestamps = Boolean(process.argv.includes("--randomize-timestamps"));
+
+const getTime = () => {
+    const now = new Date().getTime();
+    if (useRandomizedTimestamps) {
+        return now - Math.floor(5000 * Math.random());
+    } else {
+        return undefined;
+    }
+}
+
 const produceLogs = (obj = {}) => {
     const message = getRandom(logMessages);
     const isStructured = getRandom([true, true, true, false]);
@@ -38,7 +49,7 @@ const produceLogs = (obj = {}) => {
         const level = getRandom(logLevels);
         const package = getRandom(packages);
         const healthy = getRandom([{ healthy: true }, { healthy: false }, {}]);
-        logger[level]({ ...obj, package, ...healthy }, message);
+        logger[level]({ ...obj, package, ...healthy, time: getTime() }, message);
     } else {
         console.log(message);
     }
