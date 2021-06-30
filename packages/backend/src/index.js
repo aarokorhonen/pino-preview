@@ -90,7 +90,7 @@ if (process.argv.includes("--unsafe-enable-test-api")) {
 }
 
 app.get("/api/export", (req, res) => {
-    const data = values.map((v) => JSON.stringify(v)).join("\n");
+    const data = values.map((v) => JSON.stringify(v) + "\n").join("");
     const filename = `json-log-preview_export_${new Date().toISOString()}.jsonl`;
     res.attachment(filename);
     res.send(data);
