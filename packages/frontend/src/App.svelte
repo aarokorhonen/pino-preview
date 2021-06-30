@@ -231,8 +231,9 @@
             <div class="p-6 flex-grow flex flex-col">
                 {#if wsState === "closed"}
                     <div
-                        class="p-2 bg-red-800 items-center text-red-100 leading-none lg:rounded-full flex mb-6"
+                        class="p-2 bg-red-800 items-center text-red-100 leading-none rounded-full flex mb-6"
                         role="alert"
+                        data-test-ws-terminated
                     >
                         <span
                             class="flex rounded-full bg-red-500 uppercase px-2 py-1 text-xs font-bold mr-3"
