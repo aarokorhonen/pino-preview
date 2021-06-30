@@ -66,11 +66,12 @@ if (process.argv.includes("--unsafe-enable-test-api")) {
 
     app.post("/api/test/messages", (req, res) => {
         try {
-            const value = req.body;
-            if (typeof value !== "object" || value === null) {
-                throw new Error("Not object");
-            } else {
-                pushNewValue(value);
+            for (const value of req.body.messages) {
+                if (typeof value !== "object" || value === null) {
+                    throw new Error("Not object");
+                } else {
+                    pushNewValue(value);
+                }
             }
             res.json({ status: "ok" });
         } catch (err) {

@@ -428,6 +428,7 @@
             <div
                 class="absolute w-12 h-12 right-12 bottom-6 rounded-full bg-blue-500 hover:bg-blue-400 flex items-center justify-center text-4xl cursor-pointer"
                 on:click={scroll}
+                data-test-scroll-to-bottom
             >
                 &#8595;
             </div>

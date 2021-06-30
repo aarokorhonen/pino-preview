@@ -2,6 +2,10 @@
 
 context("Frontend", () => {
     beforeEach(() => {
+        cy.request({
+            url: "http://localhost:5000/api/test/reset",
+            method: "POST",
+        });
         cy.visit("http://localhost:5000");
     });
 
@@ -16,9 +20,13 @@ context("Frontend", () => {
             url: "http://localhost:5000/api/test/messages",
             method: "POST",
             body: {
-                time: new Date(1624986915208).getTime(),
-                level: 40,
-                msg: "[data-test-log-msg-001] Hello World",
+                messages: [
+                    {
+                        time: new Date(1624986915208).getTime(),
+                        level: 40,
+                        msg: "[data-test-log-msg-001] Hello World",
+                    },
+                ],
             },
         });
         cy.contains("data-test-log-msg-001")
@@ -28,7 +36,46 @@ context("Frontend", () => {
             .contains("2021-06-29 17:15:15Z");
     });
 
+    it.only("renders 100 messages", () => {
+        const messages = [];
+        for (let i = 0; i < 100; i++) {
+            messages.push({
+                time: new Date(1624986915208 + i * 1000).getTime(),
+                level: 40,
+                msg: `[data-test-log-msg-${String(i).padStart(
+                    3,
+                    "0",
+                )}] Hello World`,
+            });
+        }
+        cy.request({
+            url: "http://localhost:5000/api/test/messages",
+            method: "POST",
+            body: {
+                messages,
+            },
+        });
+        cy.contains("data-test-log-msg-098");
+        cy.get("svelte-virtual-list-viewport").scrollTo(0);
+        cy.contains("data-test-log-msg-000");
+        cy.get("[data-test-scroll-to-bottom]").click();
+        cy.contains("data-test-log-msg-099");
+    });
+
     it("opens and closes dialog", () => {
+        cy.request({
+            url: "http://localhost:5000/api/test/messages",
+            method: "POST",
+            body: {
+                messages: [
+                    {
+                        time: new Date(1624986915208).getTime(),
+                        level: 40,
+                        msg: "[data-test-log-msg-001] Hello World",
+                    },
+                ],
+            },
+        });
         cy.contains("data-test-log-msg-001").click();
         cy.get("[data-test-modal]").contains(
             `"msg": "[data-test-log-msg-001] Hello World"`,
