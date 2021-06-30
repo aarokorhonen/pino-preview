@@ -79,7 +79,7 @@
             aria-labelledby="modal-headline"
         >
             <div
-                class="bg-gray-50 px-4 py-3 sm:px-6 h-16 border-b-2 border-gray-700"
+                class="bg-gray-200 px-4 py-3 sm:px-6 h-16 border-b-2 border-gray-300"
             >
                 <h3
                     class="h-full text-lg leading-6 font-medium text-gray-700 sm:ml-4 flex items-center"
@@ -96,7 +96,8 @@
             <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                 <div class="sm:flex sm:items-start">
                     <div
-                        class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left flex-grow overflow-x-hidden"
+                        class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left flex-grow overflow-x-hidden bg-gray-900 rounded"
+                        style="height: 60vh"
                     >
                         <div
                             class="mt-2 bg-gray-900 text-white rounded p-6 font-mono"
