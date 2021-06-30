@@ -20,7 +20,9 @@
     "author": "",
     "license": "MIT",
     "dependencies": {},
-    "devDependencies": {},
+    "devDependencies": {
+        "prettier": "^2.3.2"
+    },
     "prettier": {
         "tabWidth": 4,
         "trailingComma": "all"
