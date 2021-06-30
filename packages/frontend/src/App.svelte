@@ -17,15 +17,13 @@
     let components = [];
     let healths = new Map();
 
-    $: logsVisible = (filterByPackage !== null
-        ? logsByPackage.get(filterByPackage)
-        : logsAll
+    $: logsVisible = (
+        filterByPackage !== null ? logsByPackage.get(filterByPackage) : logsAll
     )
         .filter((l) => matchesFilterByTimestamp(filterByTimestamp, l))
         .filter((l) => matchesFilterByLevel(filterByLevel, l))
-        .filter((l) =>
-            matchesFilterByFreetextSearch(filterByFreetextSearch, l),
-        );
+        .filter((l) => matchesFilterByFreetextSearch(filterByFreetextSearch, l))
+        .sort((l1, l2) => l1.time - l2.time);
 
     $: filterByPackage,
         filterByLevel,
