@@ -220,7 +220,7 @@
 <main>
     <div class="h-screen flex flex items-stretch">
         <nav
-            class="w-80 border-r border-gray-200 overflow-y-auto flex-shrink-0 bg-gray-50"
+            class="w-80 border-r border-gray-200 overflow-y-auto flex-shrink-0 bg-gray-50 flex flex-col"
         >
             <h1
                 class="p-6 text-2xl text-gray-800 font-bold bg-gray-200 text-center"
@@ -228,7 +228,7 @@
             >
                 JSON Log Preview
             </h1>
-            <div class="p-6 ">
+            <div class="p-6 flex-grow flex flex-col">
                 {#if wsState === "closed"}
                     <div
                         class="p-2 bg-red-800 items-center text-red-100 leading-none lg:rounded-full flex mb-6"
@@ -402,7 +402,7 @@
                 </fieldset>
 
                 {#if heapDiagnostics}
-                    <div class="text-gray-300">
+                    <div class="text-gray-300 mt-auto">
                         <p class="block text-sm font-bold mb-1">Heap</p>
                         <p class="block text-sm font-light">
                             {heapDiagnostics}
