@@ -61,6 +61,32 @@ const app = express();
 const server = http.createServer(app);
 const wss = new WebSocket.Server({ server, path: "/api/ws" });
 
+if (process.argv.includes("--unsafe-enable-test-api")) {
+    app.use(express.json());
+
+    app.post("/api/test/messages", (req, res) => {
+        try {
+            const value = req.body;
+            if (typeof value !== "object" || value === null) {
+                throw new Error("Not object");
+            } else {
+                pushNewValue(value);
+            }
+            res.json({ status: "ok" });
+        } catch (err) {
+            console.error(err);
+            res.status(400).json({ status: "error" });
+        }
+    });
+
+    app.delete("/api/test/connections", (req, res) => {
+        for (const client of wss.clients) {
+            client.close();
+        }
+        res.json({ status: "ok" });
+    });
+}
+
 app.get(
     "*",
     express.static(path.join(__dirname, "..", "..", "frontend", "public")),
