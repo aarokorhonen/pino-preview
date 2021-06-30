@@ -14,7 +14,7 @@ const rl = readline.createInterface({
     terminal: false,
 });
 
-const values = [];
+let values = [];
 
 rl.on("line", (line) => {
     try {
@@ -79,10 +79,11 @@ if (process.argv.includes("--unsafe-enable-test-api")) {
         }
     });
 
-    app.delete("/api/test/connections", (req, res) => {
+    app.post("/api/test/reset", (req, res) => {
         for (const client of wss.clients) {
             client.close();
         }
+        values = [];
         res.json({ status: "ok" });
     });
 }
