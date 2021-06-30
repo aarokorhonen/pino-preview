@@ -39,18 +39,18 @@
     const dispatch = createEventDispatcher();
 
     window.copy = async (text) => {
-        const textNoQuotes = text.replace(/^"/, "").replace(/"$/, "");
+        const textNoQuotes = text.replace(/^"/, "").replace(/"$|":$/, "");
         await navigator.clipboard.writeText(textNoQuotes);
         dispatch("copy");
     };
 
     function syntaxHighlightJson(json) {
         const classes = {
-            number: "text-blue-400",
+            number: "text-blue-400 hover:text-blue-300 hover:bg-blue-900 cursor-pointer p-1 -m-1 rounded",
             string: "text-green-400 hover:text-green-300 hover:bg-green-900 cursor-pointer p-1 -m-1 rounded",
             boolean: "text-red-400 font-bold",
             null: "text-gray-400 font-bold",
-            key: undefined,
+            key: "hover:text-yellow-300 hover:bg-yellow-900 cursor-pointer p-1 -m-1 rounded",
         };
         const getType = (match) => {
             if (/^"/.test(match)) {
@@ -78,10 +78,10 @@
             (match) => {
                 const type = getType(match);
                 const cx = classes[type] ?? "";
-                const onClick =
-                    type === "string"
-                        ? `onClick="window.copy(this.innerText)"`
-                        : "";
+                const canCopy = ["string", "number", "key"].includes(type);
+                const onClick = canCopy
+                    ? `onClick="window.copy(this.innerText)"`
+                    : "";
                 return `<span class="${cx}" ${onClick}>${match}</span>`;
             },
         );
