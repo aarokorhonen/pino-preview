@@ -80,7 +80,7 @@
     on:click
 >
     {#if logEntry.package === "not-json"}
-        <span class="text-gray-500">
+        <span class="text-gray-500 whitespace-pre">
             {formatTimeField(logEntry.time)}
             {prefixUnstructured}
             {logEntry.message}
@@ -90,7 +90,7 @@
         <span class={formatLogLevelLabel(logEntry.level).class}>
             {formatLogLevelLabel(logEntry.level).label}</span
         >&nbsp;:
-        <span class="text-blue-400">{logEntry.msg}</span>
+        <span class="text-blue-400 whitespace-pre">{logEntry.msg}</span>
     {/if}
 </div>
 

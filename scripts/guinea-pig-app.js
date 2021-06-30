@@ -9,7 +9,7 @@ const logger = pino({ base: null }).child({
 logger.level = "trace";
 
 const logMessages = [
-    "[Object object]",
+    "  [Object object]  \n  [Object object]  ",
     "A helpful diagnostics message",
     "Hello world",
     "Proceed with caution",
