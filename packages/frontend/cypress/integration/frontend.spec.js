@@ -36,7 +36,7 @@ context("Frontend", () => {
             .contains("2021-06-29 17:15:15Z");
     });
 
-    it.only("renders 100 messages", () => {
+    it("renders 100 messages", () => {
         const messages = [];
         for (let i = 0; i < 100; i++) {
             messages.push({
@@ -55,7 +55,7 @@ context("Frontend", () => {
                 messages,
             },
         });
-        cy.contains("data-test-log-msg-098");
+        cy.contains("data-test-log-msg-099");
         cy.get("svelte-virtual-list-viewport").scrollTo(0);
         cy.contains("data-test-log-msg-000");
         cy.get("[data-test-scroll-to-bottom]").click();

@@ -137,13 +137,16 @@
         const shouldScroll =
             viewport.scrollHeight -
                 (viewport.scrollTop + viewport.offsetHeight) <
-            100;
+            24;
+        console.log({ shouldScroll });
         if (shouldScroll) {
-            scroll();
+            setTimeout(() => {
+                scrollToBottom();
+            }, 0);
         }
     };
 
-    const scroll = () => {
+    const scrollToBottom = () => {
         if (!viewport) return;
         viewport.scroll(0, viewport.scrollHeight);
     };
@@ -452,7 +455,7 @@
             </VirtualList>
             <div
                 class="absolute w-12 h-12 right-12 bottom-6 rounded-full bg-blue-500 hover:bg-blue-400 flex items-center justify-center text-4xl cursor-pointer"
-                on:click={scroll}
+                on:click={scrollToBottom}
                 data-test-scroll-to-bottom
             >
                 &#8595;
