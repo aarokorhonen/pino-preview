@@ -34,29 +34,35 @@
         }
     };
 
+    window.copy = async (text) => {
+        const textNoQuotes = text.replace(/^"/, "").replace(/"$/, "");
+        await navigator.clipboard.writeText(textNoQuotes);
+        alert("Copied to Clipboard: " + textNoQuotes);
+    };
+
     function syntaxHighlightJson(json) {
         const classes = {
             number: "text-blue-400",
-            string: "text-green-400",
+            string: "text-green-400 hover:text-green-300 hover:bg-green-900 cursor-pointer p-1 -m-1 rounded",
             boolean: "text-red-400 font-bold",
             null: "text-gray-400 font-bold",
             key: undefined,
         };
-        const getClass = (match) => {
+        const getType = (match) => {
             if (/^"/.test(match)) {
                 if (/:$/.test(match)) {
-                    return classes.key;
+                    return "key";
                 } else {
-                    return classes.string;
+                    return "string";
                 }
             } else if (/^\d+$/.test(match)) {
-                return classes.number;
+                return "number";
             } else if (/true|false/.test(match)) {
-                return classes.boolean;
+                return "boolean";
             } else if (/null/.test(match)) {
-                return classes.null;
+                return "null";
             } else {
-                return "";
+                return undefined;
             }
         };
         const jsonEscaped = json
@@ -65,7 +71,15 @@
             .replace(/>/g, "&gt;");
         return jsonEscaped.replace(
             /("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g,
-            (match) => `<span class="${getClass(match)}">${match}</span>`,
+            (match) => {
+                const type = getType(match);
+                const cx = classes[type] ?? "";
+                const onClick =
+                    type === "string"
+                        ? `onClick="window.copy(this.innerText)"`
+                        : "";
+                return `<span class="${cx}" ${onClick}>${match}</span>`;
+            },
         );
     }
 </script>
