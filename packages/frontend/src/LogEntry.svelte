@@ -20,6 +20,8 @@
 </script>
 
 <script>
+    import { createEventDispatcher } from "svelte";
+
     export let logEntry;
     export let isVerbose = false;
 
@@ -34,10 +36,12 @@
         }
     };
 
+    const dispatch = createEventDispatcher();
+
     window.copy = async (text) => {
         const textNoQuotes = text.replace(/^"/, "").replace(/"$/, "");
         await navigator.clipboard.writeText(textNoQuotes);
-        alert("Copied to Clipboard: " + textNoQuotes);
+        dispatch("copy");
     };
 
     function syntaxHighlightJson(json) {

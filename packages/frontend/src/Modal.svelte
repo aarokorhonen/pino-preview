@@ -12,8 +12,6 @@
         openLog = null;
     };
 
-    let copied = false;
-
     let now = new Date();
 
     const interval = setInterval(() => {
@@ -32,9 +30,22 @@
         }
     };
 
+    let copiedAll = false;
+
     const copyJson = async () => {
         await navigator.clipboard.writeText(JSON.stringify(openLog, null, 4));
-        copied = true;
+        copiedAll = true;
+    };
+
+    let copiedValue = false;
+
+    const onCopyValue = () => {
+        if (typeof copiedValue === "number") {
+            clearTimeout(copiedValue);
+        }
+        copiedValue = setTimeout(() => {
+            copiedValue = false;
+        }, 2000);
     };
 
     const hideOlderLogs = async () => {
@@ -104,7 +115,11 @@
                         <div
                             class="mt-2 bg-gray-900 text-white rounded p-6 font-mono"
                         >
-                            <LogEntry logEntry={openLog} isVerbose={true} />
+                            <LogEntry
+                                logEntry={openLog}
+                                isVerbose={true}
+                                on:copy={onCopyValue}
+                            />
                         </div>
                     </div>
                 </div>
@@ -124,7 +139,7 @@
                     class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
                     on:click={copyJson}
                 >
-                    {#if copied}
+                    {#if copiedAll}
                         Copied JSON to clipboard!
                     {:else}
                         Copy JSON
@@ -137,6 +152,13 @@
                 >
                     Hide older logs
                 </button>
+                <span
+                    class="flex items-center text-green-600 font-medium mr-2 transition-opacity"
+                    class:opacity-0={typeof copiedValue !== "number"}
+                    class:opacity-100={typeof copiedValue === "number"}
+                >
+                    Copied value to clipboard!
+                </span>
                 <button
                     type="button"
                     class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm mr-auto"
