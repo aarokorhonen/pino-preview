@@ -8,6 +8,7 @@ context("Frontend", () => {
     it("loads app frame", () => {
         cy.get("[data-test-app-title]").contains("JSON Log Preview");
         cy.get("[data-test-ws-terminated]").should("not.exist");
+        cy.get("[data-test-modal]").should("not.exist");
     });
 
     it("renders a new message", () => {
@@ -25,6 +26,15 @@ context("Frontend", () => {
             .contains("WARN")
             .parent()
             .contains("2021-06-29 17:15:15Z");
+    });
+
+    it("opens and closes dialog", () => {
+        cy.contains("data-test-log-msg-001").click();
+        cy.get("[data-test-modal]").contains(
+            `"msg": "[data-test-log-msg-001] Hello World"`,
+        );
+        cy.get("[data-test-modal-close]").click();
+        cy.get("[data-test-modal]").should("not.exist");
     });
 
     it("shows as terminated when websocket is closed", () => {
