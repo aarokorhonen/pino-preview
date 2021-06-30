@@ -95,7 +95,7 @@
 </div>
 
 {#if isVerbose}
-    <div class="whitespace-pre px-4 text-yellow-200 mt-4">
+    <div class="whitespace-pre-wrap px-4 text-yellow-200 mt-4">
         {@html syntaxHighlightJson(JSON.stringify(logEntry, null, 4))}
     </div>
 {/if}
