@@ -1,5 +1,5 @@
-<script context="module">
-    export const formatLogLevelLabel = (level) => {
+<script context="module" lang="ts">
+    export const formatLogLevelLabel = (level): any => {
         switch (level) {
             case 60:
                 return { class: "text-red-400", label: "FATAL" };
@@ -38,6 +38,7 @@
 
     const dispatch = createEventDispatcher();
 
+    // @ts-ignore
     window.copy = async (text) => {
         const textNoQuotes = text.replace(/^"/, "").replace(/"$|":$/, "");
         await navigator.clipboard.writeText(textNoQuotes);
