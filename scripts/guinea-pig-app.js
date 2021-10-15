@@ -70,6 +70,15 @@ logger.warn(logMessages[3]);
 logger.error(logMessages[4]);
 logger.fatal(logMessages[5]);
 
+const isBatch = process.argv.includes("--batch");
+
+if (isBatch) {
+    const batchSize = 5000;
+    for (let i = 0; i < batchSize; i++) {
+        produceLogs();
+    }
+}
+
 const isRapid = process.argv.includes("--rapid");
 
 const interval = isRapid ? 10 : 1000;
