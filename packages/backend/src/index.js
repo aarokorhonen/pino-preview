@@ -2,40 +2,24 @@
 
 const path = require("path");
 const http = require("http");
-const readline = require("readline");
 const express = require("express");
 const WebSocket = require("ws");
 const open = require("open");
 
 process.stdin.pipe(process.stdout);
-
-const rl = readline.createInterface({
-    input: process.stdin,
-    terminal: false,
-});
+process.stdin.resume();
+process.stdin.setEncoding("utf8");
 
 let values = [];
 
-rl.on("line", (line) => {
-    try {
-        const value = JSON.parse(line);
-        if (typeof value !== "object" || value === null) {
-            throw new Error("Not object");
-        } else {
-            pushNewValue(value);
-        }
-    } catch (err) {
-        const newValue = {
-            time: Date.now(),
-            package: "not-json",
-            message: line,
-        };
-        pushNewValue(newValue);
-    }
+process.stdin.on("data", (data) => {
+    const rawLines = data.match(/.+/g);
+    const lines = rawLines.map((line) => parseLine(line));
+    pushNewValues(lines);
 });
 
-rl.on("close", () => {
-    process.exit(0);
+process.stdin.on("end", () => {
+    setTimeout(() => process.exit(0), 1000);
 });
 
 let exitOnSigInt = false;
@@ -48,11 +32,11 @@ process.on("SIGINT", () => {
     }
 });
 
-const pushNewValue = (newValue) => {
-    values.push(newValue);
+const pushNewValues = (newValues) => {
+    values.push(...newValues);
     wss.clients.forEach((client) => {
         if (client.readyState === WebSocket.OPEN) {
-            client.send(JSON.stringify(newValue));
+            client.send(JSON.stringify(newValues));
         }
     });
 };
@@ -70,7 +54,7 @@ if (process.argv.includes("--unsafe-enable-test-api")) {
                 if (typeof value !== "object" || value === null) {
                     throw new Error("Not object");
                 } else {
-                    pushNewValue(value);
+                    pushNewValues([value]);
                 }
             }
             res.json({ status: "ok" });
@@ -113,3 +97,21 @@ server.listen(port, () => {
         void open(url);
     }
 });
+
+const parseLine = (line) => {
+    try {
+        const value = JSON.parse(line);
+        if (typeof value !== "object" || value === null) {
+            throw new Error("Not object");
+        } else {
+            return value;
+        }
+    } catch (err) {
+        const newValue = {
+            time: Date.now(),
+            package: "not-json",
+            message: line,
+        };
+        return newValue;
+    }
+};
