@@ -3,15 +3,12 @@
     "version": "0.0.1",
     "description": "",
     "private": true,
-    "main": "./packages/backend/src/index.js",
-    "bin": {
-        "json-log-preview": "./packages/backend/src/index.js"
-    },
+    "main": "./packages/json-log-preview/dist/js/index.js",
     "workspaces": [
         "packages/*"
     ],
     "scripts": {
-        "build": "yarn workspace frontend run build",
+        "build": "rm -rf packages/json-log-preview/dist && mkdir -p packages/json-log-preview/dist/js && yarn workspace frontend run build && yarn workspace backend run build",
         "start": "yarn run build && yarn workspace backend run start",
         "start:dev:guinea-pig-app": "node scripts/guinea-pig-app.js",
         "test": "yarn run build && yarn workspace backend run test && yarn workspace frontend run test"

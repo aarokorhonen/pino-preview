@@ -80,10 +80,7 @@ app.get("/api/export", (req, res) => {
     res.send(data);
 });
 
-app.get(
-    "*",
-    express.static(path.join(__dirname, "..", "..", "frontend", "public")),
-);
+app.get("*", express.static(path.join(__dirname, "..", "public")));
 
 wss.on("connection", (ws) => {
     ws.send(JSON.stringify(values));
