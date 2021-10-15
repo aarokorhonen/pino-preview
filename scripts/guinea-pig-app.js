@@ -32,7 +32,9 @@ const getRandom = (arr) => {
     return arr[Math.floor(Math.random() * arr.length)];
 };
 
-const useRandomizedTimestamps = Boolean(process.argv.includes("--randomize-timestamps"));
+const useRandomizedTimestamps = Boolean(
+    process.argv.includes("--randomize-timestamps"),
+);
 
 const getTime = () => {
     const now = new Date().getTime();
@@ -41,7 +43,7 @@ const getTime = () => {
     } else {
         return undefined;
     }
-}
+};
 
 const produceLogs = (obj = {}) => {
     const message = getRandom(logMessages);
@@ -50,7 +52,10 @@ const produceLogs = (obj = {}) => {
         const level = getRandom(logLevels);
         const package = getRandom(packages);
         const healthy = getRandom([{ healthy: true }, { healthy: false }, {}]);
-        logger[level]({ ...obj, package, ...healthy, time: getTime() }, message);
+        logger[level](
+            { ...obj, package, ...healthy, time: getTime() },
+            message,
+        );
     } else {
         console.log(message);
     }
@@ -65,4 +70,8 @@ logger.warn(logMessages[3]);
 logger.error(logMessages[4]);
 logger.fatal(logMessages[5]);
 
-setInterval(() => produceLogs(), 1000);
+const isRapid = process.argv.includes("--rapid");
+
+const interval = isRapid ? 10 : 1000;
+
+setInterval(() => produceLogs(), interval);
