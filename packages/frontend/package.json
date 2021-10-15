@@ -12,7 +12,7 @@
     },
     "devDependencies": {
         "@rollup/plugin-commonjs": "^21.0.0",
-        "@rollup/plugin-node-resolve": "^11.0.0",
+        "@rollup/plugin-node-resolve": "^13.0.5",
         "@tsconfig/svelte": "^2.0.1",
         "cypress": "^6.8.0",
         "rollup": "^2.58.0",
