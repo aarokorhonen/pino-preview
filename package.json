@@ -11,8 +11,10 @@
         "packages/*"
     ],
     "scripts": {
-        "start": "yarn workspace frontend run build && yarn workspace backend run start",
-        "start:dev:guinea-pig-app": "node scripts/guinea-pig-app.js"
+        "build": "yarn workspace frontend run build",
+        "start": "yarn run build && yarn workspace backend run start",
+        "start:dev:guinea-pig-app": "node scripts/guinea-pig-app.js",
+        "test": "yarn run build && yarn workspace backend run test && yarn workspace frontend run test"
     },
     "author": "",
     "license": "MIT",
