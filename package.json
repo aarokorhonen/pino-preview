@@ -7,12 +7,9 @@
     "bin": {
         "json-log-preview": "./packages/backend/src/index.js"
     },
-    "workspaces": {
-        "packages": [
-            "./packages/backend",
-            "./packages/frontend"
-        ]
-    },
+    "workspaces": [
+        "packages/*"
+    ],
     "scripts": {
         "start": "yarn workspace frontend run build && yarn workspace backend run start",
         "start:dev:guinea-pig-app": "node scripts/guinea-pig-app.js"
