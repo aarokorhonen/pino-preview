@@ -13,11 +13,9 @@ process.stdin.setEncoding("utf8");
 let values = [];
 
 process.stdin.on("data", (data) => {
-    const rawLines = data.match(/.+/g);
-    if (rawLines !== null) {
-        const lines = rawLines.map((line) => parseLine(line));
-        pushNewValues(lines);
-    }
+    const rawLines = data.replace(/\n$/, "").split("\n");
+    const lines = rawLines.map((line) => parseLine(line));
+    pushNewValues(lines);
 });
 
 process.stdin.on("end", () => {
@@ -49,6 +47,10 @@ const wss = new WebSocket.Server({ server, path: "/api/ws" });
 
 if (process.argv.includes("--unsafe-enable-test-api")) {
     app.use(express.json());
+
+    app.get("/api/test/messages", (_req, res) => {
+        res.json({ values });
+    });
 
     app.post("/api/test/messages", (req, res) => {
         try {
