@@ -17,9 +17,9 @@ _Screenshot – Log entry details view:_
 
 The utility runs on Node.js, and uses websockets to stream log information to a locally running web interface.
 
-## Installation (WIP)
+## Installation
 
-Publishing this package is currently work-in-progress. In the meanwhile, you can install the package directly from GitHub.
+Publishing this package in the npmjs.com registry is currently work-in-progress. In the meanwhile, you can install the package directly from GitHub.
 
 ### Using NPM
 
@@ -35,13 +35,21 @@ yarn global add "git://github.com/aarokorhonen/json-log-preview#release/latest-e
 
 ## Usage
 
-This app provides a CLI command called `json-log-preview` which consumes input from the stdin stream, so setup a pipe for the log-producing app (use`cat`or`tail -f` if your logs are in a file).
+This app provides a CLI command called `json-log-preview` which consumes input from the stdin stream. To use it, setup a pipe for the log-producing app (use `cat` or `tail -f` if your logs are in a file). For example:
 
-By default, the app will be served at [http://localhost:3001](http://localhost:3001). This can be modified by specifying the `PORT` environment variable.
+```shell
+./run-your-app.sh | json-log-preview
+```
 
-Using the sidebar controls, you can filter the log entry view by log level, or by the `package` field of JSON objects.
+By default, the app will be served at [http://localhost:3001](http://localhost:3001). This can be modified by specifying the `PORT` environment variable. Use the `--open` flag to automatically open the web app in your default browser.
+
+Using the sidebar controls, you can filter the log entry view by free text search, log level, timestamp, or by the `package` field of JSON objects.
 
 As long as you remain scrolled to the bottom of the log panel, the view will auto-follow
 to scroll down to new log entries as they appear.
 
-For convenience, this app also forwards stdin to stdout, you can also see all log entries in your terminal in addition to the web interface. You can also pipe them to other utilities.
+For convenience, this app also forwards stdin to stdout, you can also see all log entries in your terminal in addition to the web interface. You can also pipe them to other utilities (such as [pino-pretty](https://github.com/pinojs/pino-pretty)). For example, a complete usage might be:
+
+```shell
+./run-your-app.sh | json-log-preview --open | pino-pretty
+```
