@@ -14,8 +14,10 @@ let values = [];
 
 process.stdin.on("data", (data) => {
     const rawLines = data.match(/.+/g);
-    const lines = rawLines.map((line) => parseLine(line));
-    pushNewValues(lines);
+    if (rawLines !== null) {
+        const lines = rawLines.map((line) => parseLine(line));
+        pushNewValues(lines);
+    }
 });
 
 process.stdin.on("end", () => {
