@@ -30,7 +30,7 @@ npm install --global "git://github.com/aarokorhonen/json-log-preview#release/lat
 ### Using Yarn
 
 ```shell
-yarn global remove @aarokorhonen/json-log-preview
+yarn global add "git://github.com/aarokorhonen/json-log-preview#release/latest-experimental"
 ```
 
 ## Usage
