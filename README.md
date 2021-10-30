@@ -19,21 +19,23 @@ The utility runs on Node.js, and uses websockets to stream log information to a 
 
 ## Installation (WIP)
 
-Publishing this package is currently work-in-progress. In the meanwhile, you can run the following commands to install it locally:
+Publishing this package is currently work-in-progress. In the meanwhile, you can install the package directly from GitHub.
+
+### Using NPM
 
 ```shell
-$ git clone https://github.com/aarokorhonen/json-log-preview
-$ cd json-log-preview
-$ yarn install
-$ yarn workspace frontend run build
-$ yarn global add file:$PWD
+npm install --global "git://github.com/aarokorhonen/json-log-preview#release/latest-experimental"
 ```
 
-The last command adds it to your yarn global workspace, and then it should be available by just running `json-log-preview`. Alternatively if you dont want it in global PATH, you can skip the last command and run it directly with node (`node ~/path-to/json-log-preview`).
+### Using Yarn
+
+```shell
+yarn global remove @aarokorhonen/json-log-preview
+```
 
 ## Usage
 
-This app consumes input from the stdin stream, so setup a pipe for the log-producing app (use `cat` or `tail -f` if your logs are in a file).
+This app provides a CLI command called `json-log-preview` which consumes input from the stdin stream, so setup a pipe for the log-producing app (use`cat`or`tail -f` if your logs are in a file).
 
 By default, the app will be served at [http://localhost:3001](http://localhost:3001). This can be modified by specifying the `PORT` environment variable.
 
@@ -43,23 +45,3 @@ As long as you remain scrolled to the bottom of the log panel, the view will aut
 to scroll down to new log entries as they appear.
 
 For convenience, this app also forwards stdin to stdout, you can also see all log entries in your terminal in addition to the web interface. You can also pipe them to other utilities.
-
-## Some planned features
-
--   [ ] Full documentation with usage
--   [ ] Support for arbitrary JSON log formats (field names, loglevels etc.)
--   [ ] Publish package
--   [ ] Improved JSON field discovery for setting filters
--   [ ] Support for `jq`-style syntax for filter expressions
--   [ ] Automatic test suite
--   [ ] Improved JSON viewing experience
--   [ ] Responsive design
--   [x] Binary usage support
--   [x] Full-text search as a filter
--   [x] Graceful handling of app shutdown
--   [x] Hide log entry details behind modal view by default
--   [x] Performance improvements (heavy logging will eventually result in huge DOM and slow down this experimental version of the app, so don't forget to shut it down after use!)
--   [x] Optional page auto-scroll
--   [x] Per-component health checks
-
-Etc.
