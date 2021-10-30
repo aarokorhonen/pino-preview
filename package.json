@@ -1,0 +1,17 @@
+{
+    "name": "@aarokorhonen/json-log-preview",
+    "version": "0.1.0",
+    "description": "",
+    "private": false,
+    "main": "./dist/js/index.js",
+    "bin": {
+        "json-log-preview": "./dist/js/index.js"
+    },
+    "author": "",
+    "license": "MIT",
+    "dependencies": {
+        "express": "^4.17.1",
+        "open": "^8.4.0",
+        "ws": "^8.2.3"
+    }
+}
