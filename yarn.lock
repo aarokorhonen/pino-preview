@@ -4833,10 +4833,10 @@ svelte-preprocess@^4.0.0, svelte-preprocess@^4.9.8:
     sorcery "^0.10.0"
     strip-indent "^3.0.0"
 
-svelte@^3.4.2:
-  version "3.43.2"
-  resolved "https://registry.yarnpkg.com/svelte/-/svelte-3.43.2.tgz#217fc6059f52afa281f39200b6253ac1b83812b4"
-  integrity sha512-Lj+TJfSeod8UGnoG2opysdlCy4MCck/hHQsZwtNPXdYTwLTz+WC37QwewPhZtd+h3dpfps4h9QzFxWGVI4tzQw==
+svelte@^3.46.3:
+  version "3.46.3"
+  resolved "https://registry.yarnpkg.com/svelte/-/svelte-3.46.3.tgz#31202b0c795f276726d95b648b6dd413116257ac"
+  integrity sha512-mTOXvv74CVQqJHqoIZDprVfRKVVmYNadXP0VKnOEA54223kLGCr1nMrifS4Zx29qMt/xRB38Eq1D7dDH/fM8fQ==
 
 symbol-tree@^3.2.4:
   version "3.2.4"
