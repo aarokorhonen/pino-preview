@@ -6,7 +6,7 @@
     "author": "",
     "private": true,
     "scripts": {
-        "build": "tsc && cp dist/index.js ../json-log-preview/dist/js/index.js",
+        "build": "tsc && cp dist/* ../json-log-preview/dist/js",
         "start": "node .",
         "test": "jest"
     },
