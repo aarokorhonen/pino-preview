@@ -1,20 +1,18 @@
-#!/usr/bin/env node
-
-// @ts-nocheck
-
-const path = require("path");
-const http = require("http");
-const express = require("express");
-const WebSocket = require("ws");
-const open = require("open");
+import path from "path";
+import http from "http";
+import express from "express";
+import WebSocket from "ws";
+import open from "open";
 
 process.stdin.pipe(process.stdout);
 process.stdin.resume();
 process.stdin.setEncoding("utf8");
 
-let values = [];
+type Value = Record<string, unknown>;
 
-process.stdin.on("data", (data) => {
+let values: Value[] = [];
+
+process.stdin.on("data", (data: string) => {
     const rawLines = data.replace(/\n$/, "").split("\n");
     const lines = rawLines.map((line) => parseLine(line));
     pushNewValues(lines);
@@ -34,7 +32,7 @@ process.on("SIGINT", () => {
     }
 });
 
-const pushNewValues = (newValues) => {
+const pushNewValues = (newValues: Value[]) => {
     values.push(...newValues);
     wss.clients.forEach((client) => {
         if (client.readyState === WebSocket.OPEN) {
@@ -101,7 +99,7 @@ server.listen(port, () => {
     }
 });
 
-const parseLine = (line) => {
+const parseLine = (line: string) => {
     try {
         const value = JSON.parse(line);
         if (typeof value !== "object" || value === null) {
