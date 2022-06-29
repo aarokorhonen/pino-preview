@@ -1,10 +1,13 @@
-import path from "path";
-import http from "http";
+import http from "node:http";
+import path from "node:path";
+import url from "node:url";
 import express from "express";
-import WebSocket from "ws";
+import { WebSocketServer, WebSocket } from "ws";
 import open from "open";
-import { config } from "./config";
-import { testApiRouter } from "./test-api";
+import { config } from "./config.mjs";
+import { testApiRouter } from "./test-api.mjs";
+
+const __dirname = url.fileURLToPath(new URL(".", import.meta.url));
 
 process.stdin.pipe(process.stdout);
 process.stdin.resume();
@@ -45,7 +48,7 @@ export const pushNewValues = (newValues: Value[]) => {
 
 const app = express();
 const server = http.createServer(app);
-export const wss = new WebSocket.Server({ server, path: "/api/ws" });
+export const wss = new WebSocketServer({ server, path: "/api/ws" });
 
 if (config.unsafeEnableTestApi) {
     app.use(testApiRouter);

@@ -1,6 +1,7 @@
-const got = require("got");
-const childProcess = require("child_process");
-const path = require("path");
+import childProcess from "node:child_process";
+import path from "node:path";
+import url from "node:url";
+import got from "got";
 
 let cliProcess;
 
@@ -8,11 +9,13 @@ const PORT = 3002;
 
 describe("index", () => {
     beforeEach(() => {
+        const __dirname = url.fileURLToPath(new URL(".", import.meta.url));
+
         const indexModulePath = path.resolve(
             __dirname,
             "..",
             "dist",
-            "index.js",
+            "index.mjs",
         );
         const args = ["--unsafe-enable-test-api"];
         const nodePath = process.argv[0];

@@ -1,5 +1,5 @@
 import express from "express";
-import { pushNewValues, values, wss } from "./index";
+import { pushNewValues, values, wss } from "./index.mjs";
 
 export const testApiRouter = express.Router();
 
