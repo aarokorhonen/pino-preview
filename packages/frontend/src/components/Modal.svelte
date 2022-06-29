@@ -146,7 +146,7 @@
                     on:click={() =>
                         dispatch("navigateByOffset", { offset: +1 })}
                 >
-                    &#129047; Next
+                    &ShortDownArrow; Next
                 </button>
                 <button
                     type="button"
@@ -154,7 +154,7 @@
                     on:click={() =>
                         dispatch("navigateByOffset", { offset: -1 })}
                 >
-                    &#129045; Previous
+                    &ShortUpArrow; Previous
                 </button>
             </div>
         </div>
