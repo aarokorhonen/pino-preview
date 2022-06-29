@@ -3,10 +3,10 @@
 context("Frontend", () => {
     beforeEach(() => {
         cy.request({
-            url: "http://localhost:5000/api/test/reset",
+            url: "http://localhost:5001/api/test/reset",
             method: "POST",
         });
-        cy.visit("http://localhost:5000");
+        cy.visit("http://localhost:5001");
     });
 
     it("loads app frame", () => {
@@ -17,7 +17,7 @@ context("Frontend", () => {
 
     it("renders a new message", () => {
         cy.request({
-            url: "http://localhost:5000/api/test/messages",
+            url: "http://localhost:5001/api/test/messages",
             method: "POST",
             body: {
                 messages: [
@@ -49,7 +49,7 @@ context("Frontend", () => {
             });
         }
         cy.request({
-            url: "http://localhost:5000/api/test/messages",
+            url: "http://localhost:5001/api/test/messages",
             method: "POST",
             body: {
                 messages,
@@ -64,7 +64,7 @@ context("Frontend", () => {
 
     it("opens and closes dialog", () => {
         cy.request({
-            url: "http://localhost:5000/api/test/messages",
+            url: "http://localhost:5001/api/test/messages",
             method: "POST",
             body: {
                 messages: [
@@ -86,7 +86,7 @@ context("Frontend", () => {
 
     it("shows as terminated when websocket is closed", () => {
         cy.request({
-            url: "http://localhost:5000/api/test/reset",
+            url: "http://localhost:5001/api/test/reset",
             method: "POST",
         });
         cy.get("[data-test-ws-terminated]").should("exist");
