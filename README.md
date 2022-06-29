@@ -1,7 +1,5 @@
 # json-log-preview
 
-_Note: This is experimental software and has not been extensively tested in production environments!_
-
 This is a utility web app for near-real-time previewing of structured JSON logs.
 It is currently designed to consume output from applications which use the
 [pino](https://github.com/pinojs/pino) library, but support for arbitrary structured
@@ -16,6 +14,12 @@ _Screenshot – Log entry details view:_
 ![Screenshot of json-log-preview](./doc/screenshot-2.png "Screenshot of json-log-preview")
 
 The utility runs on Node.js, and uses websockets to stream log information to a locally running web interface.
+
+## Disclaimer
+
+_Note: This is experimental software which may change at any time under development, and should not be relied on for critical use cases._
+
+_Note: For security reasons, never run this software against untrusted or potentially malicious input._
 
 ## Installation
 
