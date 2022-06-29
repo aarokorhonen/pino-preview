@@ -8,11 +8,19 @@ const PORT = 3002;
 
 describe("index", () => {
     beforeEach(() => {
-        const indexModulePath = path.resolve(__dirname, "index.js");
+        const indexModulePath = path.resolve(
+            __dirname,
+            "..",
+            "dist",
+            "index.js",
+        );
         const args = ["--unsafe-enable-test-api"];
         const nodePath = process.argv[0];
         cliProcess = childProcess.spawn(nodePath, [indexModulePath, ...args], {
             env: { PORT },
+        });
+        cliProcess.stderr.on("data", (data) => {
+            console.error(`stderr: ${data}`);
         });
     });
 
