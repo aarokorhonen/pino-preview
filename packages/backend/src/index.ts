@@ -3,6 +3,7 @@ import http from "http";
 import express from "express";
 import WebSocket from "ws";
 import open from "open";
+import { config } from "./config";
 
 process.stdin.pipe(process.stdout);
 process.stdin.resume();
@@ -45,7 +46,7 @@ const app = express();
 const server = http.createServer(app);
 const wss = new WebSocket.Server({ server, path: "/api/ws" });
 
-if (process.argv.includes("--unsafe-enable-test-api")) {
+if (config.unsafeEnableTestApi) {
     app.use(express.json());
 
     app.get("/api/test/messages", (_req, res) => {
@@ -90,11 +91,10 @@ wss.on("connection", (ws) => {
     ws.send(JSON.stringify(values));
 });
 
-const port = process.env.PORT || 3001;
-server.listen(port, () => {
-    const url = `http://localhost:${port}`;
+server.listen(config.port, () => {
+    const url = `http://localhost:${config.port}`;
     console.log(`[json-log-preview] Server listening at ${url}`);
-    if (process.argv.includes("--open")) {
+    if (config.open) {
         void open(url);
     }
 });
