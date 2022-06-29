@@ -4,6 +4,7 @@ import express from "express";
 import WebSocket from "ws";
 import open from "open";
 import { config } from "./config";
+import { testApiRouter } from "./test-api";
 
 process.stdin.pipe(process.stdout);
 process.stdin.resume();
@@ -11,7 +12,7 @@ process.stdin.setEncoding("utf8");
 
 type Value = Record<string, unknown>;
 
-let values: Value[] = [];
+export let values: Value[] = [];
 
 process.stdin.on("data", (data: string) => {
     const rawLines = data.replace(/\n$/, "").split("\n");
@@ -33,7 +34,7 @@ process.on("SIGINT", () => {
     }
 });
 
-const pushNewValues = (newValues: Value[]) => {
+export const pushNewValues = (newValues: Value[]) => {
     values.push(...newValues);
     wss.clients.forEach((client) => {
         if (client.readyState === WebSocket.OPEN) {
@@ -44,38 +45,10 @@ const pushNewValues = (newValues: Value[]) => {
 
 const app = express();
 const server = http.createServer(app);
-const wss = new WebSocket.Server({ server, path: "/api/ws" });
+export const wss = new WebSocket.Server({ server, path: "/api/ws" });
 
 if (config.unsafeEnableTestApi) {
-    app.use(express.json());
-
-    app.get("/api/test/messages", (_req, res) => {
-        res.json({ values });
-    });
-
-    app.post("/api/test/messages", (req, res) => {
-        try {
-            for (const value of req.body.messages) {
-                if (typeof value !== "object" || value === null) {
-                    throw new Error("Not object");
-                } else {
-                    pushNewValues([value]);
-                }
-            }
-            res.json({ status: "ok" });
-        } catch (err) {
-            console.error(err);
-            res.status(400).json({ status: "error" });
-        }
-    });
-
-    app.post("/api/test/reset", (req, res) => {
-        for (const client of wss.clients) {
-            client.close();
-        }
-        values = [];
-        res.json({ status: "ok" });
-    });
+    app.use(testApiRouter);
 }
 
 app.get("/api/export", (req, res) => {
