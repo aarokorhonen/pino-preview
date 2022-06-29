@@ -2,7 +2,7 @@
     import { onDestroy, createEventDispatcher } from "svelte";
 
     import LogEntry from "./LogEntry.svelte";
-    import { getRelativeTimestampLabel } from "./utils";
+    import { getRelativeTimestampLabel } from "../utils";
 
     export let openLog;
     export let filterByTimestamp;
