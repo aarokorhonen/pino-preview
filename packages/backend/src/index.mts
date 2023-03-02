@@ -77,7 +77,12 @@ server.listen(config.port, () => {
 
 const parseLine = (line: string) => {
     try {
-        const value = JSON.parse(line);
+        const regex = /{.*}/g;
+        const jsonFound = line.match(regex);
+        if (!jsonFound || !jsonFound.length) {
+            throw new Error("Not object");
+        }
+        const value = JSON.parse(jsonFound[0]);
         if (typeof value !== "object" || value === null) {
             throw new Error("Not object");
         } else {
