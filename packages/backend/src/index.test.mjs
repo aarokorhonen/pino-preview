@@ -80,4 +80,18 @@ describe("index", () => {
             ],
         });
     });
+
+    it("correctly sanitizes input", async () => {
+        cliProcess.stdin.write(
+            " some prefix | " +
+                JSON.stringify({ test: "test-1" }) +
+                " | some postfix " +
+                "\n",
+        );
+        const res = await got.get(`http://localhost:${PORT}/api/test/messages`);
+        expect(res.statusCode).toBe(200);
+        expect(JSON.parse(res.body)).toEqual({
+            values: [{ test: "test-1" }],
+        });
+    });
 });
