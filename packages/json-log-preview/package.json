@@ -1,15 +1,16 @@
 {
     "name": "@aarokorhonen/json-log-preview",
-    "version": "0.1.0",
+    "version": "0.1.2",
     "description": "",
     "private": false,
-    "main": "./dist/js/index.js",
+    "main": "./dist/js/index.mjs",
     "bin": {
-        "json-log-preview": "./dist/js/index.js"
+        "json-log-preview": "./dist/js/index.mjs"
     },
     "author": "",
     "license": "MIT",
     "dependencies": {
+        "arg": "^5.0.1",
         "express": "^4.18.1",
         "open": "^8.4.0",
         "ws": "^8.2.3"

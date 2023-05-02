@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import http from "node:http";
 import path from "node:path";
 import url from "node:url";
