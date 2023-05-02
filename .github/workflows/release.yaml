@@ -76,7 +76,7 @@ jobs:
               run: git push origin ${{ github.event.inputs.tag }}
 
             - name: Git push branch
-              run: git push origin release/latest-experimental --force-with-lease
+              run: git push origin release/latest-experimental --force
 
             - name: Release on GitHub
               uses: softprops/action-gh-release@v1
