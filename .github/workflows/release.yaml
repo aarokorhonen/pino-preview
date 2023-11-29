@@ -1,0 +1,55 @@
+name: Release
+
+on:
+    workflow_dispatch:
+        inputs:
+            tag:
+                description: "Tag (for example 0.1.5-experimental)"
+                required: true
+                type: string
+
+jobs:
+    release:
+        runs-on: ubuntu-latest
+        outputs:
+            build: ${{ steps.build.outputs.build }}
+        steps:
+            - name: Validate tag
+              run: |
+                  if [[ ! ${{ github.event.inputs.tag }} =~ ^[0-9]+\.[0-9]+\.[0-9]+(-experimental)?$ ]]; then
+                      echo "Invalid tag format"
+                      exit 1
+                  fi
+
+            - uses: actions/checkout@v4
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: "18"
+
+            - name: Install dependencies
+              run: npm ci
+
+            - id: build
+              name: Build
+              run: npm run build
+
+            - name: Copy build output to root
+              run: |
+                  cp -r packages/json-log-preview .
+
+            - name: Git add
+              run: git add package.json && git add dist
+
+            - name: Create branch release-experimental
+              run: git branch -D release/latest-experimental git switch --orphan release/latest-experimental
+
+            - name: Git commit
+              run: git commit -m "Release v${{ github.event.inputs.tag }}"
+
+            - name: Git tag
+              run: git tag -a ${{ github.event.inputs.tag }} -m "Release v${{ github.event.inputs.tag }}"
+
+            - name: Git push tag
+              run: git push origin ${{ github.event.inputs.tag }}
