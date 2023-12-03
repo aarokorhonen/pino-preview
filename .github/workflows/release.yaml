@@ -23,13 +23,6 @@ jobs:
 
             - uses: actions/checkout@v4
 
-            - name: Ensure tag is available
-              run: |
-                  if ! git rev-parse ${{ github.event.inputs.tag }} >/dev/null 2>&1; then
-                      echo "::error::Tag \"${{ github.event.inputs.tag }}\" already exists, aborting"
-                      exit 1
-                  fi
-
             - name: Setup Node.js
               uses: actions/setup-node@v4
               with:
