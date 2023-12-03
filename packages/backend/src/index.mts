@@ -25,7 +25,9 @@ process.stdin.on("data", (data: string) => {
 });
 
 process.stdin.on("end", () => {
-    setTimeout(() => process.exit(0), 1000);
+    if (config.exitOnStdinEnd) {
+        setTimeout(() => process.exit(0), 1000);
+    }
 });
 
 let exitOnSigInt = false;

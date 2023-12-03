@@ -1,0 +1,30 @@
+name: CI
+
+on:
+    workflow_dispatch:
+    pull_request:
+    push:
+        branches:
+            - main
+    merge_group:
+        types:
+            - checks_requested
+
+jobs:
+    Test:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v3
+
+            - name: Setup node
+              uses: actions/setup-node@v3
+              with:
+                  node-version: 16.13.x
+                  cache: yarn
+
+            - name: Install dependencies
+              run: yarn install --immutable --immutable-cache
+
+            - name: Build and test
+              run: yarn run test

@@ -16,6 +16,7 @@ describe("config", () => {
             open: undefined,
             port: 3001,
             unsafeEnableTestApi: undefined,
+            exitOnStdinEnd: true,
         });
     });
 
@@ -26,6 +27,7 @@ describe("config", () => {
         const { config } = await import("../dist/config.mjs");
         expect(config).toEqual({
             port: 3002,
+            exitOnStdinEnd: true,
         });
     });
 
@@ -34,6 +36,7 @@ describe("config", () => {
         const { config } = await import("../dist/config.mjs");
         expect(config).toEqual({
             port: 3003,
+            exitOnStdinEnd: true,
         });
     });
 
@@ -43,6 +46,7 @@ describe("config", () => {
         expect(config).toEqual({
             open: true,
             port: 3001,
+            exitOnStdinEnd: true,
         });
     });
 
@@ -52,6 +56,7 @@ describe("config", () => {
         expect(config).toEqual({
             port: 3001,
             unsafeEnableTestApi: true,
+            exitOnStdinEnd: false,
         });
     });
 
