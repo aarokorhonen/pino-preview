@@ -83,7 +83,6 @@ jobs:
               with:
                   files: "*"
                   tag_name: ${{ github.event.inputs.tag }}
-                  draft: true
                   prerelease: true
                   body: |
                       This is an experimental release.
