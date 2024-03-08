@@ -90,16 +90,16 @@
 </script>
 
 <div
-    class="rounded-sm px-4 truncate font-mono text-blue-400"
+    class="rounded-sm px-4 truncate font-mono text-green-400"
     class:text-blue-400={logEntry.package !== "not-json"}
     class:text-gray-500={logEntry.package === "not-json"}
     class:cursor-pointer={!isVerbose}
-    class:hover:bg-gray-700={!isVerbose}
+    class:hover:bg-green-900={!isVerbose}
     style="height: 24px;"
     on:click
 >
     {#if logEntry.package === "not-json"}
-        <span class="text-gray-500 whitespace-pre">
+        <span class="text-stone-500 whitespace-pre">
             {formatTimeField(logEntry.time)}
             {prefixUnstructured}
             {logEntry.msg}
@@ -109,12 +109,12 @@
         <span class={formatLogLevelLabel(logEntry.level).class}>
             {formatLogLevelLabel(logEntry.level).label}</span
         >&nbsp;:
-        <span class="text-blue-400 whitespace-pre">{logEntry.msg}</span>
+        <span class="text-green-400 whitespace-pre">{logEntry.msg}</span>
     {/if}
 </div>
 
 {#if isVerbose}
-    <div class="whitespace-pre-wrap px-4 text-yellow-200 mt-4">
+    <div class="whitespace-pre-wrap px-4 text-yellow-300 mt-4">
         {@html syntaxHighlightJson(JSON.stringify(logEntry, null, 4))}
     </div>
 {/if}

@@ -44,7 +44,7 @@
             throw viewports;
         } else {
             viewport = viewports[0];
-            viewport.classList.add("bg-gray-900");
+            viewport.classList.add("bg-green-950");
         }
     });
 
@@ -225,14 +225,16 @@
 <main>
     <div class="h-screen flex items-stretch">
         <nav
-            class="w-80 border-r border-gray-200 overflow-y-auto flex-shrink-0 bg-gray-50 flex flex-col"
+            class="w-80 border-r border-stone-400 overflow-y-auto flex-shrink-0 bg-stone-50 flex flex-col"
         >
             <h1
-                class="p-6 text-2xl text-gray-800 font-bold bg-gray-200 text-center"
+                class="px-6 py-4 text-2xl text-stone-800 font-bold bg-stone-300 text-center flex items-center justify-center"
                 data-test-app-title
             >
                 Pino Preview
-                {`\u{1F332}`}
+                <span class="p-4 text-4xl -m-2">
+                    {`\u{1F332}`}
+                </span>
             </h1>
             <div class="p-6 flex-grow flex flex-col">
                 {#if wsState === "closed"}
@@ -252,7 +254,7 @@
                 {/if}
                 <label
                     for="filterByFreetextSearch"
-                    class="block text-sm font-bold text-gray-700"
+                    class="block text-sm font-bold text-stone-700"
                 >
                     Filter by freetext search
                 </label>
@@ -262,12 +264,12 @@
                         id="filterByFreetextSearch"
                         type="text"
                         placeholder="Enter freetext search"
-                        class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md p-2"
+                        class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-stone-300 rounded-md p-2"
                     />
                 </div>
                 <label
                     for="filterByTimestamp"
-                    class="block text-sm font-bold text-gray-700"
+                    class="block text-sm font-bold text-stone-700"
                 >
                     Filter by timestamp (on or after)
                 </label>
@@ -277,7 +279,7 @@
                         id="filterByTimestamp"
                         type="text"
                         placeholder="e.g. 2021-03-23 15:10:15Z"
-                        class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md p-2"
+                        class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-stone-300 rounded-md p-2"
                     />
                     <div>
                         <button
@@ -319,10 +321,10 @@
                 <fieldset class="mb-6">
                     <div>
                         <legend
-                            class="block text-sm font-bold text-gray-700 mb-1"
+                            class="block text-sm font-bold text-stone-700 mb-1"
                             >Filter by level</legend
                         >
-                        <p class="block text-sm font-light text-gray-400">
+                        <p class="block text-sm font-light text-stone-400">
                             Choose the minimum log level to display
                         </p>
                     </div>
@@ -334,11 +336,11 @@
                                     value={level}
                                     id="filterByLevel_{level}"
                                     type="radio"
-                                    class="focus:ring-blue-500 h-4 w-5 overflow-visible text-blue-600 border-gray-300 cursor-pointer"
+                                    class="focus:ring-blue-500 h-4 w-5 overflow-visible text-blue-600 border-stone-300 cursor-pointer"
                                 />
                                 <label
                                     for="filterByLevel_{level}"
-                                    class="ml-3 block text-sm font-medium text-gray-700 cursor-pointer"
+                                    class="ml-3 block text-sm font-medium text-stone-700 cursor-pointer"
                                 >
                                     {#if level !== null}
                                         <span
@@ -359,10 +361,10 @@
                 <fieldset class="mb-6">
                     <div>
                         <legend
-                            class="block text-sm font-bold text-gray-700 mb-1"
+                            class="block text-sm font-bold text-stone-700 mb-1"
                             >Filter by component</legend
                         >
-                        <p class="block text-sm font-light text-gray-400">
+                        <p class="block text-sm font-light text-stone-400">
                             Focus on a particular component
                         </p>
                     </div>
@@ -374,11 +376,11 @@
                                     value={comp}
                                     id="filterByPackage_{comp}"
                                     type="radio"
-                                    class="focus:ring-blue-500 h-4 w-5 text-blue-600 border-gray-300 cursor-pointer"
+                                    class="focus:ring-blue-500 h-4 w-5 text-blue-600 border-stone-300 cursor-pointer"
                                 />
                                 <label
                                     for="filterByPackage_{comp}"
-                                    class="ml-3 text-sm font-medium text-gray-700 flex-grow flex items-center cursor-pointer"
+                                    class="ml-3 text-sm font-medium text-stone-700 flex-grow flex items-center cursor-pointer"
                                 >
                                     <div class="text-left flex-grow">
                                         {@html getComponentFiltetrBtnLabel(
@@ -386,7 +388,7 @@
                                         )}
                                     </div>
                                     <span
-                                        class="inline-flex items-center justify-center w-8 ml-4 px-2 py-1 text-xs font-bold leading-none text-gray-500 bg-gray-300 rounded-full"
+                                        class="inline-flex items-center justify-center w-8 ml-4 px-2 py-1 text-xs font-bold leading-none text-stone-500 bg-stone-300 rounded-full"
                                         class:bg-red-200={healths.get(comp) ===
                                             false}
                                         class:text-red-600={healths.get(
@@ -409,11 +411,11 @@
                 </fieldset>
 
                 <div class="mt-auto">
-                    <p class="block text-sm font-bold mb-3 text-gray-700">
+                    <p class="block text-sm font-bold mb-3 text-stone-700">
                         <a
                             href="/api/export"
                             target="_blank"
-                            class="inline-flex items-center px-2.5 py-1.5 border border-gray-300 shadow-sm text-xs font-medium rounded text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                            class="inline-flex items-center px-2.5 py-1.5 border border-stone-300 shadow-sm text-xs font-medium rounded text-stone-700 bg-white hover:bg-stone-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -433,7 +435,7 @@
                         </a>
                     </p>
                     {#if heapDiagnostics}
-                        <div class="text-gray-300">
+                        <div class="text-stone-300">
                             <p class="block text-sm font-bold mb-1">Heap</p>
                             <p class="block text-sm font-light">
                                 {heapDiagnostics}
@@ -445,7 +447,7 @@
         </nav>
 
         <div
-            class="flex-grow bg-gray-900 text-gray-100 p-6 font-mono overflow-x-hidden"
+            class="flex-grow bg-green-950 text-stone-100 p-6 font-mono overflow-x-hidden"
         >
             <VirtualList items={logsVisible} let:item itemHeight={24}>
                 <LogEntry

@@ -78,7 +78,7 @@
                     class="h-full text-lg leading-6 font-medium text-gray-700 sm:ml-4 flex items-center"
                     id="modal-headline"
                 >
-                    <span> Message details </span>
+                    <span>🪵 Message details</span>
                     <span class="ml-auto">
                         {getRelativeTimestampLabel(
                             now - new Date(openLog.time),
@@ -89,11 +89,11 @@
             <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                 <div class="sm:flex sm:items-start">
                     <div
-                        class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left flex-grow overflow-x-hidden bg-gray-900 rounded"
+                        class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left flex-grow overflow-x-hidden bg-green-950 rounded"
                         style="height: 60vh"
                     >
                         <div
-                            class="mt-2 bg-gray-900 text-white rounded p-6 font-mono"
+                            class="mt-2 bg-green-950 text-white rounded p-6 font-mono"
                         >
                             <LogEntry
                                 logEntry={openLog}
