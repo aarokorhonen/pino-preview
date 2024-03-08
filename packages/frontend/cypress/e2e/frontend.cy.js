@@ -10,7 +10,7 @@ context("Frontend", () => {
     });
 
     it("loads app frame", () => {
-        cy.get("[data-test-app-title]").contains("JSON Log Preview");
+        cy.get("[data-test-app-title]").contains("Pino Preview");
         cy.get("[data-test-ws-terminated]").should("not.exist");
         cy.get("[data-test-modal]").should("not.exist");
     });

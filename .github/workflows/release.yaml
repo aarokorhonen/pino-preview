@@ -38,7 +38,7 @@ jobs:
               uses: actions/upload-artifact@v3
               with:
                   name: build
-                  path: packages/json-log-preview/
+                  path: packages/pino-preview/
 
     release:
         name: Release

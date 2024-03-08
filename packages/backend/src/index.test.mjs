@@ -44,7 +44,7 @@ describe("index", () => {
         const res = await got.get(`http://localhost:${PORT}/api/export`);
         expect(res.statusCode).toBe(200);
         expect(res.headers["content-disposition"]).toMatch(
-            /^attachment; filename="json-log-preview_export_.*\.jsonl"$/,
+            /^attachment; filename="pino-preview_export_.*\.jsonl"$/,
         );
         expect(res.body).toEqual(`{"test":"test-1"}\n{"test":"test-2"}\n`);
     });

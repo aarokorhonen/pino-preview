@@ -1,17 +1,8 @@
-# json-log-preview
+# Pino Preview 🌲 - Interactive Viewer for Structured Logs
 
 This is a utility web app for near-real-time previewing of structured JSON logs.
-It is currently designed to consume output from applications which use the
-[pino](https://github.com/pinojs/pino) library, but support for arbitrary structured
-JSON log formats is planned.
-
-_Screenshot – Log overview panel:_
-
-![Screenshot of json-log-preview](./doc/screenshot-1.png "Screenshot of json-log-preview")
-
-_Screenshot – Log entry details view:_
-
-![Screenshot of json-log-preview](./doc/screenshot-2.png "Screenshot of json-log-preview")
+It is designed to consume output from applications which use the
+[pino](https://github.com/pinojs/pino) library format for logs.
 
 The utility runs on Node.js, and uses websockets to stream log information to a locally running web interface.
 
@@ -28,21 +19,21 @@ Publishing this package in the npmjs.com registry is currently work-in-progress.
 ### Using NPM
 
 ```shell
-npm install --global "git://github.com/aarokorhonen/json-log-preview#release/latest-experimental"
+npm install --global "git://github.com/aarokorhonen/pino-preview#release/latest-experimental"
 ```
 
 ### Using Yarn
 
 ```shell
-yarn global add "git://github.com/aarokorhonen/json-log-preview#release/latest-experimental"
+yarn global add "git://github.com/aarokorhonen/pino-preview#release/latest-experimental"
 ```
 
 ## Usage
 
-This app provides a CLI command called `json-log-preview` which consumes input from the stdin stream. To use it, setup a pipe for the log-producing app (use `cat` or `tail -f` if your logs are in a file). For example:
+This app provides a CLI command called `pino-preview` which consumes input from the stdin stream. To use it, setup a pipe for the log-producing app (use `cat` or `tail -f` if your logs are in a file). For example:
 
 ```shell
-./run-your-app.sh | json-log-preview
+./run-your-app.sh | pino-preview
 ```
 
 By default, the app will be served at [http://localhost:3001](http://localhost:3001). This can be modified by specifying the `PORT` environment variable. Use the `--open` flag to automatically open the web app in your default browser.
@@ -55,5 +46,5 @@ to scroll down to new log entries as they appear.
 For convenience, this app also forwards stdin to stdout, you can also see all log entries in your terminal in addition to the web interface. You can also pipe them to other utilities (such as [pino-pretty](https://github.com/pinojs/pino-pretty)). For example, a complete usage might be:
 
 ```shell
-./run-your-app.sh | json-log-preview --open | pino-pretty
+./run-your-app.sh | pino-preview --open | pino-pretty
 ```

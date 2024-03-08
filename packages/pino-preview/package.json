@@ -1,11 +1,11 @@
 {
-    "name": "@aarokorhonen/json-log-preview",
+    "name": "@aarokorhonen/pino-preview",
     "version": "0.1.6",
     "description": "",
     "private": false,
     "main": "./dist/js/index.mjs",
     "bin": {
-        "json-log-preview": "./dist/js/index.mjs"
+        "pino-preview": "./dist/js/index.mjs"
     },
     "author": "",
     "license": "MIT",

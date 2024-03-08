@@ -231,7 +231,8 @@
                 class="p-6 text-2xl text-gray-800 font-bold bg-gray-200 text-center"
                 data-test-app-title
             >
-                JSON Log Preview
+                Pino Preview
+                {`\u{1F332}`}
             </h1>
             <div class="p-6 flex-grow flex flex-col">
                 {#if wsState === "closed"}

@@ -1,14 +1,14 @@
 {
-    "name": "json-log-preview",
+    "name": "pino-preview",
     "version": "0.0.1",
     "description": "",
     "private": true,
-    "main": "./packages/json-log-preview/dist/js/index.mjs",
+    "main": "./packages/pino-preview/dist/js/index.mjs",
     "workspaces": [
         "packages/*"
     ],
     "scripts": {
-        "build": "rm -rf packages/json-log-preview/dist && mkdir -p packages/json-log-preview/dist/js && yarn workspace frontend run build && yarn workspace backend run build",
+        "build": "rm -rf packages/pino-preview/dist && mkdir -p packages/pino-preview/dist/js && yarn workspace frontend run build && yarn workspace backend run build",
         "start": "yarn run build && yarn workspace backend run start",
         "start:dev:guinea-pig-app": "node scripts/guinea-pig-app.js",
         "test": "yarn run build && yarn workspace backend run test && yarn workspace frontend run test"

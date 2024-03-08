@@ -6,7 +6,7 @@
     "author": "",
     "private": true,
     "scripts": {
-        "build": "tsc && cp dist/* ../json-log-preview/dist/js",
+        "build": "tsc && cp dist/* ../pino-preview/dist/js",
         "start": "node .",
         "test": "NODE_OPTIONS=--experimental-vm-modules jest"
     },

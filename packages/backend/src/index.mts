@@ -65,7 +65,7 @@ if (config.unsafeEnableTestApi) {
 
 app.get("/api/export", (req, res) => {
     const data = values.map((v) => JSON.stringify(v) + "\n").join("");
-    const filename = `json-log-preview_export_${new Date().toISOString()}.jsonl`;
+    const filename = `pino-preview_export_${new Date().toISOString()}.jsonl`;
     res.attachment(filename);
     res.send(data);
 });
@@ -84,7 +84,7 @@ const ANSI_BOLD = "\x1b[1m";
 server.listen(config.port, () => {
     const url = `http://localhost:${config.port}`;
     console.log(
-        `${ANSI_GREEN}[json-log-preview] App available at ${ANSI_BOLD}${url}${ANSI_RESET}${ANSI_GREEN} - Press Ctrl-C to exit${ANSI_RESET}\n`,
+        `${ANSI_GREEN}[pino-preview] App available at ${ANSI_BOLD}${url}${ANSI_RESET}${ANSI_GREEN} - Press Ctrl-C to exit${ANSI_RESET}\n`,
     );
     if (config.open) {
         void open(url);

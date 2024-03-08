@@ -3,7 +3,7 @@
     "version": "0.0.1",
     "private": true,
     "scripts": {
-        "build": "rollup -c && cp -r public ../json-log-preview/dist/public",
+        "build": "rollup -c && cp -r public ../pino-preview/dist/public",
         "dev": "rollup -c -w",
         "start": "sirv public",
         "test": "start-server-and-test 'yarn test:start' http://localhost:5001 'yarn test:run'",
