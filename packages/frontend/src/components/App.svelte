@@ -223,7 +223,7 @@
 {/if}
 
 <main>
-    <div class="h-screen flex flex items-stretch">
+    <div class="h-screen flex items-stretch">
         <nav
             class="w-80 border-r border-gray-200 overflow-y-auto flex-shrink-0 bg-gray-50 flex flex-col"
         >
@@ -262,7 +262,7 @@
                         id="filterByFreetextSearch"
                         type="text"
                         placeholder="Enter freetext search"
-                        class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                        class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md p-2"
                     />
                 </div>
                 <label
@@ -277,7 +277,7 @@
                         id="filterByTimestamp"
                         type="text"
                         placeholder="e.g. 2021-03-23 15:10:15Z"
-                        class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                        class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md p-2"
                     />
                     <div>
                         <button
@@ -334,7 +334,7 @@
                                     value={level}
                                     id="filterByLevel_{level}"
                                     type="radio"
-                                    class="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 cursor-pointer"
+                                    class="focus:ring-blue-500 h-4 w-5 overflow-visible text-blue-600 border-gray-300 cursor-pointer"
                                 />
                                 <label
                                     for="filterByLevel_{level}"
@@ -374,11 +374,11 @@
                                     value={comp}
                                     id="filterByPackage_{comp}"
                                     type="radio"
-                                    class="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 cursor-pointer"
+                                    class="focus:ring-blue-500 h-4 w-5 text-blue-600 border-gray-300 cursor-pointer"
                                 />
                                 <label
                                     for="filterByPackage_{comp}"
-                                    class="ml-3 block text-sm font-medium text-gray-700 flex-grow flex items-center cursor-pointer"
+                                    class="ml-3 text-sm font-medium text-gray-700 flex-grow flex items-center cursor-pointer"
                                 >
                                     <div class="text-left flex-grow">
                                         {@html getComponentFiltetrBtnLabel(
@@ -467,5 +467,8 @@
     </div>
 </main>
 
-<style>
+<style global>
+    @tailwind base;
+    @tailwind components;
+    @tailwind utilities;
 </style>
