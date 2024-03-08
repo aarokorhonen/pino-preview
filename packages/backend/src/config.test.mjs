@@ -17,6 +17,7 @@ describe("config", () => {
             port: 3001,
             unsafeEnableTestApi: undefined,
             exitOnStdinEnd: true,
+            output: "quiet",
         });
     });
 
@@ -28,6 +29,7 @@ describe("config", () => {
         expect(config).toEqual({
             port: 3002,
             exitOnStdinEnd: true,
+            output: "quiet",
         });
     });
 
@@ -37,6 +39,7 @@ describe("config", () => {
         expect(config).toEqual({
             port: 3003,
             exitOnStdinEnd: true,
+            output: "quiet",
         });
     });
 
@@ -47,6 +50,7 @@ describe("config", () => {
             open: true,
             port: 3001,
             exitOnStdinEnd: true,
+            output: "quiet",
         });
     });
 
@@ -57,6 +61,27 @@ describe("config", () => {
             port: 3001,
             unsafeEnableTestApi: true,
             exitOnStdinEnd: false,
+            output: "quiet",
+        });
+    });
+
+    it("supports --output=quiet", async () => {
+        process.argv = [...argv, "--output=quiet"];
+        const { config } = await import("../dist/config.mjs");
+        expect(config).toEqual({
+            port: 3001,
+            exitOnStdinEnd: true,
+            output: "quiet",
+        });
+    });
+
+    it("supports --output=pipe", async () => {
+        process.argv = [...argv, "--output=pipe"];
+        const { config } = await import("../dist/config.mjs");
+        expect(config).toEqual({
+            port: 3001,
+            exitOnStdinEnd: true,
+            output: "pipe",
         });
     });
 

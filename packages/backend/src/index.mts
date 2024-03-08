@@ -10,7 +10,7 @@ import { testApiRouter } from "./test-api.mjs";
 
 const __dirname = url.fileURLToPath(new URL(".", import.meta.url));
 
-process.stdin.pipe(process.stdout);
+if (config.output === "pipe") process.stdin.pipe(process.stdout);
 process.stdin.resume();
 process.stdin.setEncoding("utf8");
 
@@ -25,8 +25,14 @@ process.stdin.on("data", (data: string) => {
 });
 
 process.stdin.on("end", () => {
+    console.log(
+        `${ANSI_RED}Stdin ended, not exiting - Press Ctrl-C to exit (supply --exit-on-stdin-end to exit automatically)`,
+    );
     if (config.exitOnStdinEnd) {
-        setTimeout(() => process.exit(0), 1000);
+        console.log(`${ANSI_RED}Stdin ended, exiting...`);
+        setTimeout(() => {
+            process.exit(0);
+        }, 1000);
     }
 });
 
@@ -70,9 +76,16 @@ wss.on("connection", (ws) => {
     ws.send(JSON.stringify(values));
 });
 
+const ANSI_RED = "\x1b[31m";
+const ANSI_GREEN = "\x1b[32m";
+const ANSI_RESET = "\x1b[0m";
+const ANSI_BOLD = "\x1b[1m";
+
 server.listen(config.port, () => {
     const url = `http://localhost:${config.port}`;
-    console.log(`[json-log-preview] Server listening at ${url}`);
+    console.log(
+        `${ANSI_GREEN}[json-log-preview] App available at ${ANSI_BOLD}${url}${ANSI_RESET}${ANSI_GREEN} - Press Ctrl-C to exit${ANSI_RESET}\n`,
+    );
     if (config.open) {
         void open(url);
     }
