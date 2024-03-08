@@ -20,11 +20,11 @@ jobs:
             - name: Setup node
               uses: actions/setup-node@v3
               with:
-                  node-version: 16.13.x
-                  cache: yarn
+                  node-version: "20"
+                  cache: npm
 
             - name: Install dependencies
-              run: yarn install --immutable --immutable-cache
+              run: npm ci
 
             - name: Build and test
-              run: yarn run test
+              run: npm run test

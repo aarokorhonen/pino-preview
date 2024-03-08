@@ -1,4 +1,6 @@
-# Pino Preview 🌲 - Interactive Viewer for Structured Logs
+# Pino Preview 🌲
+
+_Interactive Web Viewer for Structured Logs_
 
 This is a utility web app for near-real-time previewing of structured JSON logs.
 It is designed to consume output from applications which use the

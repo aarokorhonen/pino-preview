@@ -8,10 +8,10 @@
         "packages/*"
     ],
     "scripts": {
-        "build": "rm -rf packages/pino-preview/dist && mkdir -p packages/pino-preview/dist/js && yarn workspace frontend run build && yarn workspace backend run build",
-        "start": "yarn run build && yarn workspace backend run start",
+        "build": "rm -rf packages/pino-preview/dist && mkdir -p packages/pino-preview/dist/js && npm --workspace=frontend run build && npm --workspace=backend run build",
+        "start": "npm run build && npm --workspace=backend run start",
         "start:dev:guinea-pig-app": "node scripts/guinea-pig-app.js",
-        "test": "yarn run build && yarn workspace backend run test && yarn workspace frontend run test"
+        "test": "npm run build && npm --workspace=backend run test && npm --workspace=frontend run test"
     },
     "author": "",
     "license": "MIT",

@@ -6,10 +6,11 @@
         "build": "rollup -c && cp -r public ../pino-preview/dist/public",
         "dev": "rollup -c -w",
         "start": "sirv public",
-        "test": "start-server-and-test 'yarn test:start' http://localhost:5001 'yarn test:run'",
+        "test": "start-server-and-test 'npm run test:start' http://localhost:5001 'npm run test:run'",
         "test:run": "cypress run",
         "test:start": "PORT=5001 node ../.. --unsafe-enable-test-api",
-        "test:cypress": "start-server-and-test 'yarn test:start' http://localhost:5001 'yarn cypress open'"
+        "test:cypress": "start-server-and-test 'npm run test:start' http://localhost:5001 'npm run cypress open'",
+        "cypress": "cypress"
     },
     "devDependencies": {
         "@rollup/plugin-commonjs": "^22.0.1",
