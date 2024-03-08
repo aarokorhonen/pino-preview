@@ -108,7 +108,7 @@ const parseLine = (line: string) => {
         const newValue = {
             time: Date.now(),
             package: "not-json",
-            message: line,
+            msg: line,
         };
         return newValue;
     }

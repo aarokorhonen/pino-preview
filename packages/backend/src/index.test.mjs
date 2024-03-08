@@ -58,22 +58,22 @@ describe("index", () => {
         expect(JSON.parse(res.body)).toEqual({
             values: [
                 {
-                    message: "test1",
+                    msg: "test1",
                     package: "not-json",
                     time: expect.any(Number),
                 },
                 {
-                    message: "test2",
+                    msg: "test2",
                     package: "not-json",
                     time: expect.any(Number),
                 },
                 {
-                    message: "",
+                    msg: "",
                     package: "not-json",
                     time: expect.any(Number),
                 },
                 {
-                    message: "test3",
+                    msg: "test3",
                     package: "not-json",
                     time: expect.any(Number),
                 },

@@ -102,7 +102,7 @@
         <span class="text-gray-500 whitespace-pre">
             {formatTimeField(logEntry.time)}
             {prefixUnstructured}
-            {logEntry.message}
+            {logEntry.msg}
         </span>
     {:else}
         {formatTimeField(logEntry.time)}
