@@ -1,6 +1,6 @@
 {
     "name": "@aarokorhonen/pino-preview",
-    "version": "0.1.6",
+    "version": "0.1.8",
     "description": "",
     "private": false,
     "main": "./dist/js/index.mjs",
