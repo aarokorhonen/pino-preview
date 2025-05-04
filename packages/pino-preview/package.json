@@ -5,7 +5,8 @@
     "private": false,
     "main": "./dist/js/index.mjs",
     "bin": {
-        "pino-preview": "./dist/js/index.mjs"
+        "pino-preview": "./dist/js/index.mjs",
+        "json-log-preview": "./dist/js/index.mjs"
     },
     "author": "",
     "license": "MIT",
