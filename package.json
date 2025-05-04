@@ -1,0 +1,19 @@
+{
+    "name": "@aarokorhonen/pino-preview",
+    "version": "0.1.8",
+    "description": "",
+    "private": false,
+    "main": "./dist/js/index.mjs",
+    "bin": {
+        "pino-preview": "./dist/js/index.mjs",
+        "json-log-preview": "./dist/js/index.mjs"
+    },
+    "author": "",
+    "license": "MIT",
+    "dependencies": {
+        "arg": "^5.0.1",
+        "express": "^4.18.1",
+        "open": "^8.4.0",
+        "ws": "^8.2.3"
+    }
+}
